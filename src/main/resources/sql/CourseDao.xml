@@ -50,7 +50,7 @@
         WHERE id = #{id}
     </select>
 
-    <select id="selectCourseByUserId" resultMap="CourseDto">
+    <select id="selectCourseListByUserId" resultMap="CourseDto">
         SELECT <include refid="column"/>
         FROM tbl_courses
         WHERE user_id = #{userId}

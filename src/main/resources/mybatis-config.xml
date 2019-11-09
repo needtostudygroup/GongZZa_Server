@@ -10,8 +10,8 @@
     </settings>
 
     <typeAliases>
-        <package name="kr.co.m_n09.vos"/>
-        <package name="kr.co.m_n09.dtos"/>
+        <package name="com.needtostudy.gongzza.vos"/>
+        <package name="com.needtostudy.gongzza.dtos"/>
         <package name="java.lang"/>
     </typeAliases>
 </configuration>

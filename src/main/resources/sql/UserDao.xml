@@ -4,21 +4,24 @@
 <mapper namespace="com.needtostudy.gongzza.daos.UserDao">
 
     <sql id="column">
-        ID id,
-        NAME name,
-        PASSWORD password,
-        SERVICE_ID serviceId,
-        SALT salt
+        id,
+        password,
+        salt,
+        birthday,
+        name,
+        signed_in_at signedInAt,
+        school_id schoolId
     </sql>
 
     <insert id="createUser">
         INSERT INTO tbl_users
         VALUES (
             #{id},
-            #{name},
             #{password},
-            #{serviceId},
-            #{salt}
+            #{salt},
+            #{birthday},
+            #{name},
+            NOW()
         )
     </insert>
 
@@ -27,13 +30,26 @@
         FROM tbl_users
         WHERE id = #{id}
         AND password = #{password}
-        AND service_id = #{serviceId}
     </select>
 
     <select id="selectSaltByUserId" resultType="String">
         SELECT salt
         FROM tbl_users
         WHERE id = #{id}
-        AND service_id = #{serviceId}
+    </select>
+
+    <select id="selectSchoolIdById" resultType="School">
+        SELECT
+            id,
+            name,
+            english_name englishName,
+            email
+        FROM tbl_schools
+        WHERE id = (
+            SELECT
+                school_id
+            FROM tbl_users
+            WHERE id = #{id}
+        )
     </select>
 </mapper>

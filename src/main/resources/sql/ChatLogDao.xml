@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵핑될 DAO 인터페이스의 Full name 을 줍니다. -->
+<mapper namespace="com.needtostudy.gongzza.daos.ChatLogDao">
+
+    <sql id="column">
+        id,
+        post_id     postId,
+        sender_id   senderId,
+        content,
+        sended_at   sendedAt
+    </sql>
+
+    <select id="selectChatLog" resultType="ChatLog">
+        SELECT <include refid="column"/>
+        FROM tbl_chat_logs
+        WHERE post_id = #{postId}
+        ORDER BY sended_at DESC
+        OFFSET #{offset}
+        LIMIT #{limit}
+    </select>
+
+    <insert id="insertChatLog" parameterType="ChatLog">
+        <selectKey resultType="Integer" keyProperty="id" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO tbl_chat_logs
+        VALUES (
+        #{id},
+        #{postId},
+        #{senderId},
+        #{content},
+        NOW()
+        )
+    </insert>
+
+</mapper>

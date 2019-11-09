@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵핑될 DAO 인터페이스의 Full name 을 줍니다. -->
+<mapper namespace="com.needtostudy.gongzza.daos.PostDao">
+
+    <resultMap id="PostDto" type="PostDto">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="title_image_url" property="titleImageUrl"/>
+        <result column="total_num_participants" property="totalNumParticipants"/>
+        <result column="meet_datetime" property="meetDateTime"/>
+        <result column="created_at" property="createdAt"/>
+        <collection property="participantList"
+                    column="{postId = id}"
+                    select="selectParticipantListByPostId"/>
+        <collection property="hashTagList" ofType="HashTag"
+                    column="{postId = id}"
+                    select="com.needtostudy.gongzza.daos.HashTagDao.selectHashTagByPostId"/>
+    </resultMap>
+
+    <sql id="column">
+        id,
+        user_id userId,
+        title,
+        content,
+        title_image_url titleImageUrl,
+        total_num_participants totalNumParticipants,
+        current_num_participants currentNumParticipants,
+        meet_datetime meetDateTime,
+        created_at createdAt
+    </sql>
+
+    <insert id="createPost" parameterType="Post">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO tbl_posts
+        VALUES (
+            #{id},
+            #{userId},
+            #{title},
+            #{content},
+            #{titleImageUrl},
+            #{totalNumParticipants},
+            #{currentNumParticipants},
+            #{meetDateTime},
+            NOW()
+        )
+    </insert>
+
+    <select id="selectPostById" resultMap="PostDto">
+        SELECT <include refid="column"/>
+        FROM tbl_posts
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectRecentPostList">
+        SELECT <include refid="column"/>
+        FROM tbl_posts AS p
+        JOIN tbl_users AS u
+            ON p.user_id = u.id
+            AND u.school_id = #{schoolId}
+        WHERE (
+            SELECT COUNT(*)
+            FROM tbl_course_infos as i
+            JOIN tbl_course as c
+                ON i.course_id = c.id
+            JOIN tbl_users as cu
+                ON cu.id = c.user_id
+                AND cu.id = #{userId}
+            WHERE p.meet_datetime >= i.start_time
+            AND i.end_time >= p.meet_datetime
+        ) = 0
+        ORDER BY created_at DESC OFFSET #{offset} LIMIT #{limit}
+    </select>
+
+    <update id="updatePost">
+        UPDATE tbl_posts
+        SET
+            title = #{title},
+            content = #{content},
+            title_image_url = #{titleImageUrl},
+            total_num_participants = #{totalNumParticipants},
+            current_num_participants = #{currentNumParticipants},
+            meet_date_time = #{meetDateTime},
+            NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deletePost">
+        DELETE FROM tbl_posts
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

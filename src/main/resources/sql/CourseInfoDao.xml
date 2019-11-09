@@ -38,7 +38,13 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="selectCourseInfoByCourseId" resultType="CourseInfo">
+    <select id="selectCourseInfoById" resultType="CourseInfo">
+        SELECT <include refid="column"/>
+        FROM tbl_course_infos
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectCourseInfoListByCourseId" resultType="CourseInfo">
         SELECT <include refid="column"/>
         FROM tbl_course_infos
         WHERE courseId = #{courseId}

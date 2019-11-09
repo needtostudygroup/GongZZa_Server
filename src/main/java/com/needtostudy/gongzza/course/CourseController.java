@@ -21,6 +21,7 @@ public class CourseController {
 
     @PutMapping("{id}")
     public int updateCourse(@PathVariable int id, @RequestBody Course course) {
+        course.setId(id);
         courseService.updateCourse(course);
         return 200;
     }

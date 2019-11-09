@@ -1,6 +1,6 @@
 package com.needtostudy.gongzza.push;
 
-import com.needtostudy.gongzza.vos.Push;
+//import com.needtostudy.gongzza.vos.Push;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,9 @@ public class PushController {
     @Autowired
     private PushService pushService;
 
-    @PostMapping("")
-    public ResponseEntity<Integer> push(@RequestBody Push push) throws Exception {
-        pushService.push(push);
-        return new ResponseEntity<Integer>(0, HttpStatus.OK);
-    }
+//    @PostMapping("")
+//    public ResponseEntity<Integer> push(@RequestBody Push push) throws Exception {
+//        pushService.push(push);
+//        return new ResponseEntity<Integer>(0, HttpStatus.OK);
+//    }
 }

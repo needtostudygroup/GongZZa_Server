@@ -1,7 +1,6 @@
 package com.needtostudy.gongzza.chatLog;
 
 import com.needtostudy.gongzza.vos.ChatLog;
-import com.needtostudy.gongzza.vos.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +11,17 @@ import java.util.List;
 public class ChatLogController {
 
     @Autowired
-    private ChatLogService chatService;
+    private ChatLogService chatLogService;
 
     @GetMapping("")
     public List<ChatLog> selectChatLogList(@RequestParam int postId,
                                            @RequestParam int offset,
                                            @RequestParam int limit) {
-        return chatService.selectChatLogList(postId, offset, limit);
+        return chatLogService.selectChatLogList(postId, offset, limit);
     }
 
-    @GetMapping("")
+    @PostMapping("")
     public ChatLog insertChatLog(@RequestBody ChatLog chatLog) {
-        return chatService.insertChatLog(chatLog);
+        return chatLogService.insertChatLog(chatLog);
     }
 }

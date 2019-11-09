@@ -11,13 +11,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("services/{serviceId}")
-    public User signUp(@RequestBody User user, @PathVariable int serviceId) throws Exception {
-        user.setServiceId(serviceId);
+    @PostMapping("")
+    public User signUp(@RequestBody User user) throws Exception {
         return userService.signUp(user);
     }
 
-    @GetMapping("login")
+    @GetMapping("")
     public User login(@RequestParam String id, @RequestParam String password, @RequestParam int serviceId) throws Exception {
         return userService.getUserByIdPw(id, password, serviceId);
     }

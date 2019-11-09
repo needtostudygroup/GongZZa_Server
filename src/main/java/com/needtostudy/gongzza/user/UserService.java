@@ -29,17 +29,17 @@ public class UserService implements UserRepository {
         user.setSalt(Base64.encodeBase64String(salt));
         user.setPassword(Base64.encodeBase64String(factory.generateSecret(spec).getEncoded()));
         userDao.createUser(user);
-        return userDao.selectUserByIdPw(user.getId(), user.getPassword(), user.getServiceId());
+        return userDao.selectUserByIdPw(user.getId(), user.getPassword());
     }
 
     public User getUserByIdPw(String id, String password, int serviceId) throws Exception {
-        String salt = userDao.selectSaltByUserId(id, serviceId);
+        String salt = userDao.selectSaltByUserId(id);
         if (salt == null)
             return null;
 
         KeySpec spec = new PBEKeySpec(password.toCharArray(), Base64.decodeBase64(salt), 65536, 128);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         password = Base64.encodeBase64String(factory.generateSecret(spec).getEncoded());
-        return userDao.selectUserByIdPw(id, password, serviceId);
+        return userDao.selectUserByIdPw(id, password);
     }
 }

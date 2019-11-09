@@ -30,7 +30,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="kr.co.m_n09.daos"/>
+        <property name="basePackage" value="com.needtostudy.gongzza.daos"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -21,7 +21,8 @@
             #{salt},
             #{birthday},
             #{name},
-            NOW()
+            NOW(),
+            #{schoolId}
         )
     </insert>
 

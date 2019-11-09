@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public User login(@RequestParam String id, @RequestParam String password, @RequestParam int serviceId) throws Exception {
-        return userService.getUserByIdPw(id, password, serviceId);
+    public User login(@RequestParam String id, @RequestParam String password) throws Exception {
+        return userService.getUserByIdPw(id, password);
     }
 }

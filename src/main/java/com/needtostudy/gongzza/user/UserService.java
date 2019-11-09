@@ -32,7 +32,7 @@ public class UserService implements UserRepository {
         return userDao.selectUserByIdPw(user.getId(), user.getPassword());
     }
 
-    public User getUserByIdPw(String id, String password, int serviceId) throws Exception {
+    public User getUserByIdPw(String id, String password) throws Exception {
         String salt = userDao.selectSaltByUserId(id);
         if (salt == null)
             return null;

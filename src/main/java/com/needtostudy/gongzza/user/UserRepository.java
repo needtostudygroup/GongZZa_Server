@@ -6,5 +6,5 @@ public interface UserRepository {
 
     User signUp(User user) throws Exception;
 
-    User getUserByIdPw(String id, String password, int serviceId) throws Exception;
+    User getUserByIdPw(String id, String password) throws Exception;
 }

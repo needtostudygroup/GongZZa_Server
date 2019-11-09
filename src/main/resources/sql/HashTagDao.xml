@@ -22,7 +22,7 @@
         )
     </insert>
 
-    <select id="selectHashTagByPostId" resultType="HashTag">
+    <select id="selectHashTagListByPostId" resultType="HashTag">
         SELECT <include refid="column"/>
         FROM tbl_hashtags
         WHERE post_id = #{postId}

@@ -11,7 +11,7 @@
         sended_at   sendedAt
     </sql>
 
-    <select id="selectChatLog" resultType="ChatLog">
+    <select id="selectChatLogList" resultType="ChatLog">
         SELECT <include refid="column"/>
         FROM tbl_chat_logs
         WHERE post_id = #{postId}
@@ -20,17 +20,23 @@
         LIMIT #{limit}
     </select>
 
+    <select id="selectChatLog" resultType="ChatLog">
+        SELECT <include refid="column"/>
+        FROM tbl_chat_logs
+        WHERE id = #{id}
+    </select>
+
     <insert id="insertChatLog" parameterType="ChatLog">
         <selectKey resultType="Integer" keyProperty="id" order="BEFORE">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO tbl_chat_logs
         VALUES (
-        #{id},
-        #{postId},
-        #{senderId},
-        #{content},
-        NOW()
+            #{id},
+            #{postId},
+            #{senderId},
+            #{content},
+            NOW()
         )
     </insert>
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵핑될 DAO 인터페이스의 Full name 을 줍니다. -->
+<mapper namespace="com.needtostudy.gongzza.daos.UserDao">
+
+    <sql id="column">
+        ID id,
+        NAME name,
+        PASSWORD password,
+        SERVICE_ID serviceId,
+        SALT salt
+    </sql>
+
+    <insert id="createUser">
+        INSERT INTO tbl_users
+        VALUES (
+            #{id},
+            #{name},
+            #{password},
+            #{serviceId},
+            #{salt}
+        )
+    </insert>
+
+    <select id="selectUserByIdPw" resultType="User">
+        SELECT <include refid="column"/>
+        FROM tbl_users
+        WHERE id = #{id}
+        AND password = #{password}
+        AND service_id = #{serviceId}
+    </select>
+
+    <select id="selectSaltByUserId" resultType="String">
+        SELECT salt
+        FROM tbl_users
+        WHERE id = #{id}
+        AND service_id = #{serviceId}
+    </select>
+</mapper>

@@ -35,8 +35,9 @@ public class UserController {
     }
 
     @PutMapping("find/password")
-    public int findPassword(@RequestParam String id, @RequestParam String password) throws Exception {
-        userService.setNewPassword(id, password);
-        return 200;
+    public int findPassword(@RequestParam String id, @RequestParam String password, @RequestParam int authorityCode) throws Exception {
+        if (authorityCode == 200)
+            userService.setNewPassword(id, password);
+        return authorityCode;
     }
 }

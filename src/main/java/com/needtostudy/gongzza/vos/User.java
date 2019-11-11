@@ -1,38 +1,17 @@
 package com.needtostudy.gongzza.vos;
 
+import com.needtostudy.gongzza.dtos.UserDto;
 
-import java.util.Date;
-public class User {
-    private String id;
-    private String name;
-    private String password;
+public class User extends UserDto {
+
     private String salt;
-    private Date birthday;
-    private Date signedInAt;
-    private int schoolId;
 
-    public String getId() {
-        return id;
+    public User() {
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public User(UserDto userDto, String salt) {
+        super(userDto.getId(), userDto.getName(), userDto.getPassword(), userDto.getBirthday(), userDto.getSchoolId());
+        this.salt = salt;
     }
 
     public String getSalt() {
@@ -41,29 +20,5 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public Date getSignedInAt() {
-        return signedInAt;
-    }
-
-    public void setSignedInAt(Date signedInAt) {
-        this.signedInAt = signedInAt;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public int getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(int schoolId) {
-        this.schoolId = schoolId;
     }
 }

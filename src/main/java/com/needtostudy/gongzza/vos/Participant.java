@@ -1,6 +1,8 @@
 package com.needtostudy.gongzza.vos;
 
-public class Participant extends User {
+import com.needtostudy.gongzza.dtos.UserDto;
+
+public class Participant extends UserDto {
 
     private int postId;
 

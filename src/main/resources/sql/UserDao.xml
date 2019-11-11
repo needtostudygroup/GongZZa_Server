@@ -26,7 +26,7 @@
         )
     </insert>
 
-    <select id="selectUserByIdPw" resultType="User">
+    <select id="selectUserByIdPw" resultType="UserDto">
         SELECT <include refid="column"/>
         FROM tbl_users
         WHERE id = #{id}
@@ -53,4 +53,17 @@
             WHERE id = #{id}
         )
     </select>
+
+    <select id="selectIdByNameAndBirthday" resultType="String">
+        SELECT id
+        FROM tbl_users
+        WHERE name = #{name}
+        AND birthday = #{birthday}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE tbl_users
+        SET password = #{password}
+        WHERE id = #{id}
+    </update>
 </mapper>

@@ -24,13 +24,13 @@ public class UserController {
     }
 
     @GetMapping("find/id")
-    public String findId(@RequestParam String name, @RequestParam Date birthday) throws Exception {
-        return userService.findId(name, birthday);
+    public String findId(@RequestParam String name, @RequestParam String email) throws Exception {
+        return userService.findId(name, email);
     }
 
     @GetMapping("find/password")
-    public int authenticateFindPassword(@RequestParam String id, @RequestParam String name, @RequestParam Date birthday) throws Exception {
-        return userService.authenticateFindPassword(id, name, birthday);
+    public int authenticateFindPassword(@RequestParam String id, @RequestParam String email) throws Exception {
+        return userService.authenticateFindPassword(id, email);
     }
 
     @PutMapping("find/password")

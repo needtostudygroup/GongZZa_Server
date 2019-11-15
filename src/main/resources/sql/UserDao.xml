@@ -10,7 +10,8 @@
         birthday,
         name,
         signed_in_at signedInAt,
-        school_id schoolId
+        school_id schoolId,
+        email
     </sql>
 
     <insert id="createUser">
@@ -22,7 +23,8 @@
             #{birthday},
             #{name},
             NOW(),
-            #{schoolId}
+            #{schoolId},
+            #{email}
         )
     </insert>
 
@@ -54,11 +56,18 @@
         )
     </select>
 
-    <select id="selectIdByNameAndBirthday" resultType="String">
+    <select id="selectUserByIdAndEmail" resultType="UserDto">
+        SELECT <include refid="column"/>
+        FROM tbl_users
+        WHERE id = #{id}
+        AND email = #{email}
+    </select>
+
+    <select id="selectIdByNameAndEmail" resultType="String">
         SELECT id
         FROM tbl_users
         WHERE name = #{name}
-        AND birthday = #{birthday}
+        AND email = #{email}
     </select>
 
     <update id="updatePassword">

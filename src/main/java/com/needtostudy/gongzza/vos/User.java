@@ -10,7 +10,7 @@ public class User extends UserDto {
     }
 
     public User(UserDto userDto, String salt) {
-        super(userDto.getId(), userDto.getName(), userDto.getPassword(), userDto.getBirthday(), userDto.getSchoolId());
+        super(userDto.getId(), userDto.getName(), userDto.getPassword(), userDto.getBirthday(), userDto.getSchoolId(), userDto.getEmail());
         this.salt = salt;
     }
 

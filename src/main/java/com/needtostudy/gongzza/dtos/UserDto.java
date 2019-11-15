@@ -10,16 +10,26 @@ public class UserDto {
     private Date birthday;
     private Date signedInAt;
     private int schoolId;
+    private String email;
 
     public UserDto() {
     }
 
-    public UserDto(String id, String name, String password, Date birthday, int schoolId) {
+    public UserDto(String id, String name, String password, Date birthday, int schoolId, String email) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.birthday = birthday;
         this.schoolId = schoolId;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {

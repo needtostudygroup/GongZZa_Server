@@ -6,8 +6,6 @@ import com.needtostudy.gongzza.vos.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-
 @Repository
 public interface UserDao {
 
@@ -21,8 +19,11 @@ public interface UserDao {
 
     School selectSchoolIdById(@Param("id") String id);
 
-    String selectIdByNameAndBirthday(@Param("name") String name,
-                                     @Param("birthday")Date birthday);
+    String selectIdByNameAndEmail(@Param("name") String name,
+                                  @Param("email") String email);
+
+    UserDto selectUserByIdAndEmail(@Param("id") String id,
+                                   @Param("email") String email);
 
     void updatePassword(@Param("id") String id, @Param("password") String password);
 }

@@ -1,34 +1,16 @@
 package com.needtostudy.gongzza.course;
 
-import com.needtostudy.gongzza.daos.CourseDao;
 import com.needtostudy.gongzza.vos.Course;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class CourseService implements CourseRepository {
+public interface CourseService {
 
-    @Autowired
-    private CourseDao courseDao;
+    Course insertCourse(Course course);
 
-    @Transactional
-    public Course insertCourse(Course course) {
-        courseDao.insertCourse(course);
-        return courseDao.selectCourseById(course.getId());
-    }
+    void updateCourse(Course course);
 
-    public void updateCourse(Course course) {
-        courseDao.updateCourse(course);
-    }
+    void deleteCourse(int id);
 
-    public void deleteCourse(int id) {
-        courseDao.deleteCourse(id);
-    }
-
-    public List<Course> selectCourseListByUserId(String userId) {
-        return courseDao.selectCourseListByUserId(userId);
-    }
+    List<Course> selectCourseListByUserId(String userId);
 }

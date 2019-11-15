@@ -15,9 +15,10 @@
             <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver"/>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
+
     <context:component-scan base-package="com.needtostudy.gongzza"/>
 
-    <mvc:resources mapping="/frontend/**" location="/frontend/"/>
+    <mvc:resources mapping="/frontend/**" location="frontend/"/>
     
     <mvc:interceptors>
         <mvc:interceptor>

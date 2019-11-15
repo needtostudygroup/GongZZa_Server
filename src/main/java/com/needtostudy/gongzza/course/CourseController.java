@@ -1,6 +1,5 @@
 package com.needtostudy.gongzza.course;
 
-import com.needtostudy.gongzza.vos.ChatLog;
 import com.needtostudy.gongzza.vos.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,26 +1,12 @@
 package com.needtostudy.gongzza.courseInfo;
 
-import com.needtostudy.gongzza.daos.CourseInfoDao;
 import com.needtostudy.gongzza.vos.CourseInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class CourseInfoService implements CourseInfoRepository {
+public interface CourseInfoService {
 
-    @Autowired
-    private CourseInfoDao courseInfoDao;
+    CourseInfo insertCourseInfo(CourseInfo courseInfo);
 
-    public CourseInfo insertCourseInfo(CourseInfo courseInfo) {
-        courseInfoDao.insertCourseInfo(courseInfo);
-        return courseInfoDao.selectCourseInfoById(courseInfo.getId());
-    }
+    void updateCourseInfo(CourseInfo courseInfo);
 
-    public void updateCourseInfo(CourseInfo courseInfo) {
-        courseInfoDao.updateCourseInfo(courseInfo);
-    }
-
-    public void deleteCourseInfo(int id) {
-        courseInfoDao.deleteCourseInfo(id);
-    }
+    void deleteCourseInfo(int id);
 }

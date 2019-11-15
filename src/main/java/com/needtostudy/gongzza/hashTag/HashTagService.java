@@ -1,23 +1,12 @@
 package com.needtostudy.gongzza.hashTag;
 
-import com.needtostudy.gongzza.daos.HashTagDao;
 import com.needtostudy.gongzza.vos.HashTag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class HashTagService implements HashTagRepository {
+public interface HashTagService {
 
-    @Autowired
-    private HashTagDao hashTagDao;
+    void createHashTag(HashTag hashTag);
 
-    public void createHashTag(HashTag hashTag) {
-        hashTagDao.createHashTag(hashTag);
-    }
-
-    public List<HashTag> selectHashTagListByPostId(int postId) {
-        return hashTagDao.selectHashTagListByPostId(postId);
-    }
+    List<HashTag> selectHashTagListByPostId(int postId);
 }

@@ -1,7 +1,6 @@
 package com.needtostudy.gongzza.user;
 
 import com.needtostudy.gongzza.dtos.UserDto;
-import com.needtostudy.gongzza.vos.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

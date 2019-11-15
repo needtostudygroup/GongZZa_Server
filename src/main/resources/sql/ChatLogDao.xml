@@ -27,7 +27,7 @@
     </select>
 
     <insert id="insertChatLog" parameterType="ChatLog">
-        <selectKey resultType="Integer" keyProperty="id" order="BEFORE">
+        <selectKey resultType="Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO tbl_chat_logs

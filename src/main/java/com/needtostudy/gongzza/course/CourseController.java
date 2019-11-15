@@ -1,5 +1,6 @@
 package com.needtostudy.gongzza.course;
 
+import com.needtostudy.gongzza.dtos.CourseDto;
 import com.needtostudy.gongzza.vos.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,8 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("")
-    public Course insertCourse(@RequestBody Course course) {
-        return courseService.insertCourse(course);
+    public Course insertCourse(@RequestBody CourseDto courseDto) throws Exception {
+        return courseService.insertCourse(courseDto);
     }
 
     @PutMapping("{id}")

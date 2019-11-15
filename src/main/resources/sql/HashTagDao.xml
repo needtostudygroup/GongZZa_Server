@@ -10,7 +10,7 @@
     </sql>
 
     <insert id="createHashTag" parameterType="HashTag">
-        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO tbl_hashtags

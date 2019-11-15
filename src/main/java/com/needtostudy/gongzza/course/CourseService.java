@@ -1,12 +1,13 @@
 package com.needtostudy.gongzza.course;
 
+import com.needtostudy.gongzza.dtos.CourseDto;
 import com.needtostudy.gongzza.vos.Course;
 
 import java.util.List;
 
 public interface CourseService {
 
-    Course insertCourse(Course course);
+    Course insertCourse(CourseDto courseDto) throws Exception;
 
     void updateCourse(Course course);
 

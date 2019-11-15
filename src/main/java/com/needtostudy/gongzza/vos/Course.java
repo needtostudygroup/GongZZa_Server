@@ -6,6 +6,22 @@ public class Course {
     private String name;
     private String professor;
 
+    public Course() {
+    }
+
+    public Course(String userId, String name, String professor) {
+        this.userId = userId;
+        this.name = name;
+        this.professor = professor;
+    }
+
+    public Course(int id, String userId, String name, String professor) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.professor = professor;
+    }
+
     public int getId() {
         return id;
     }

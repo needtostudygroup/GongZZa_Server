@@ -33,7 +33,7 @@
     </sql>
 
     <insert id="createPost" parameterType="Post">
-        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO tbl_posts

@@ -7,6 +7,28 @@ public class CourseInfo {
     private String endTime;
     private int day;
 
+    public CourseInfo() {
+    }
+    public CourseInfo(int id, int courseId, String startTime, String endTime, int day) {
+        this.id = id;
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.day = day;
+    }
+    public CourseInfo(int courseId, String startTime, String endTime, int day) {
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.day = day;
+    }
+
+    public CourseInfo(String startTime, String endTime, int day) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.day = day;
+    }
+
     public int getId() {
         return id;
     }

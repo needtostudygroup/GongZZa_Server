@@ -9,6 +9,14 @@ public class CourseDto extends Course {
 
     private List<CourseInfo> courseInfoList;
 
+    public CourseDto() {
+    }
+
+    public CourseDto(Course course, List<CourseInfo> courseInfoList) {
+        super(course.getUserId(), course.getName(), course.getProfessor());
+        this.courseInfoList = courseInfoList;
+    }
+
     public List<CourseInfo> getCourseInfoList() {
         return courseInfoList;
     }

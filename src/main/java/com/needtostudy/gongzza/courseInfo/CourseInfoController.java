@@ -11,21 +11,22 @@ public class CourseInfoController {
     @Autowired
     private CourseInfoService courseInfoService;
 
-    @PostMapping("")
-    public CourseInfo insertCourseInfo(@RequestBody CourseInfo courseInfo) {
+    @PostMapping("courses/{courseId}")
+    public CourseInfo insertCourseInfo(@PathVariable int courseId, @RequestBody CourseInfo courseInfo) {
+        courseInfo.setCourseId(courseId);
         return courseInfoService.insertCourseInfo(courseInfo);
     }
 
     @PutMapping("{id}")
-    public int updateCourseInfo(@PathVariable int id, @RequestBody CourseInfo courseInfo) {
+    public boolean updateCourseInfo(@PathVariable int id, @RequestBody CourseInfo courseInfo) {
         courseInfo.setId(id);
         courseInfoService.updateCourseInfo(courseInfo);
-        return 200;
+        return true;
     }
 
     @DeleteMapping("{id}")
-    public int deleteCourseInfo(@PathVariable int id) {
+    public boolean deleteCourseInfo(@PathVariable int id) {
         courseInfoService.deleteCourseInfo(id);
-        return 200;
+        return true;
     }
 }

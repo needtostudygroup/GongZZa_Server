@@ -11,7 +11,7 @@
         day
     </sql>
 
-    <insert id="insertCourseInfo">
+    <insert id="insertCourseInfo" parameterType="CourseInfo">
         <selectKey resultType="Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>

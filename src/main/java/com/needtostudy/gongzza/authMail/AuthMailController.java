@@ -20,11 +20,11 @@ public class AuthMailController {
     }
 
     @GetMapping("code/{code}")
-    public String authMail(@RequestParam String userId, @RequestParam String email,
+    public boolean authMail(@RequestParam String userId, @RequestParam String email,
                                          @PathVariable String code) {
         if (authMailService.authMail(userId, email, code) != null)
-            return "Success";
-        return "Failure";
+            return true;
+        return false;
     }
 
     @DeleteMapping("")

@@ -1,6 +1,7 @@
 package com.needtostudy.gongzza.authMail;
 
 import com.needtostudy.gongzza.vos.AuthMail;
+import com.needtostudy.gongzza.vos.ChatLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,21 +14,21 @@ public class AuthMailController {
     @Autowired
     private AuthMailService authMailService;
 
-    @PostMapping("users/{userId}/email/{email}")
-    public AuthMail createAuthMail(@PathVariable String userId, @PathVariable String email) throws Exception {
+    @PostMapping("")
+    public AuthMail createAuthMail(@RequestParam String userId, @RequestParam String email) throws Exception {
         return authMailService.createAuthMail(userId, email);
     }
 
-    @GetMapping("users/{userId}/email/{email}/code/{code}")
-    public String authMail(@PathVariable String userId, @PathVariable String email,
+    @GetMapping("code/{code}")
+    public String authMail(@RequestParam String userId, @RequestParam String email,
                                          @PathVariable String code) {
         if (authMailService.authMail(userId, email, code) != null)
             return "Success";
         return "Failure";
     }
 
-    @DeleteMapping("users/{userId}/email/{email}")
-    public ResponseEntity<String> deleteAuthMail(@PathVariable String userId, @PathVariable String email) {
+    @DeleteMapping("")
+    public ResponseEntity<String> deleteAuthMail(@RequestParam String userId, @RequestParam String email) {
         authMailService.deleteAuthMail(userId, email);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }

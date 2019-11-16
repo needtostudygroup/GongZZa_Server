@@ -3,6 +3,8 @@
 # Edit at https://www.gitignore.io/?templates=vue,node,java,vuejs,macos,maven,windows,eclipse,intellij,java-web
 
 ### Eclipse ###
+*.properties
+
 .metadata
 bin/
 tmp/

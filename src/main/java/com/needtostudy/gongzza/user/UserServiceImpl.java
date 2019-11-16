@@ -5,11 +5,16 @@ import com.needtostudy.gongzza.dtos.UserDto;
 import com.needtostudy.gongzza.vos.User;
 import com.needtostudy.gongzza.daos.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.mail.internet.MimeMessage;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 

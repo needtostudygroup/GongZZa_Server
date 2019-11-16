@@ -63,6 +63,18 @@
         AND email = #{email}
     </select>
 
+    <select id="selectUserById" resultType="UserDto">
+        SELECT <include refid="column"/>
+        FROM tbl_users
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectUserByEmail" resultType="UserDto">
+        SELECT <include refid="column"/>
+        FROM tbl_users
+        WHERE email = #{email}
+    </select>
+
     <select id="selectIdByNameAndEmail" resultType="String">
         SELECT id
         FROM tbl_users

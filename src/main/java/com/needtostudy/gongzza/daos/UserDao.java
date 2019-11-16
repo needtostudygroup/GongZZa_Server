@@ -22,8 +22,12 @@ public interface UserDao {
     String selectIdByNameAndEmail(@Param("name") String name,
                                   @Param("email") String email);
 
+    UserDto selectUserById(@Param("id") String id);
+
     UserDto selectUserByIdAndEmail(@Param("id") String id,
                                    @Param("email") String email);
+
+    UserDto selectUserByEmail(@Param("email") String email);
 
     void updatePassword(@Param("id") String id, @Param("password") String password);
 }

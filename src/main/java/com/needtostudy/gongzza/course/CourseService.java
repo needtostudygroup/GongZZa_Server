@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface CourseService {
 
-    Course insertCourse(CourseDto courseDto) throws Exception;
+    CourseDto insertCourse(CourseDto courseDto) throws Exception;
 
     void updateCourse(Course course);
 
     void deleteCourse(int id);
 
-    List<Course> selectCourseListByUserId(String userId);
+    List<CourseDto> selectCourseDtoListByUserId(String userId);
 }

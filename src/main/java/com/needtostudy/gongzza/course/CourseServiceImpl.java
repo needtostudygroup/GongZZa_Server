@@ -21,7 +21,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseInfoDao courseInfoDao;
 
     @Transactional
-    public Course insertCourse(CourseDto courseDto) throws Exception {
+    public CourseDto insertCourse(CourseDto courseDto) throws Exception {
         if (courseDto.getCourseInfoList() == null || courseDto.getCourseInfoList().size() == 0)
             throw new Exception();
 
@@ -30,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
             info.setCourseId(courseDto.getId());
             courseInfoDao.insertCourseInfo(info);
         }
-        return courseDao.selectCourseById(courseDto.getId());
+        return courseDao.selectCourseDtoById(courseDto.getId());
     }
 
     public void updateCourse(Course course) {
@@ -41,7 +41,7 @@ public class CourseServiceImpl implements CourseService {
         courseDao.deleteCourse(id);
     }
 
-    public List<Course> selectCourseListByUserId(String userId) {
-        return courseDao.selectCourseListByUserId(userId);
+    public List<CourseDto> selectCourseDtoListByUserId(String userId) {
+        return courseDao.selectCourseDtoListByUserId(userId);
     }
 }

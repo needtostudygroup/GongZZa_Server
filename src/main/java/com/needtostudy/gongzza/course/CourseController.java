@@ -15,25 +15,25 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("")
-    public Course insertCourse(@RequestBody CourseDto courseDto) throws Exception {
+    public CourseDto insertCourse(@RequestBody CourseDto courseDto) throws Exception {
         return courseService.insertCourse(courseDto);
     }
 
     @PutMapping("{id}")
-    public int updateCourse(@PathVariable int id, @RequestBody Course course) {
+    public boolean updateCourse(@PathVariable int id, @RequestBody Course course) {
         course.setId(id);
         courseService.updateCourse(course);
-        return 200;
+        return true;
     }
 
     @DeleteMapping("{id}")
-    public int deleteCourse(@PathVariable int id) {
+    public boolean deleteCourse(@PathVariable int id) {
         courseService.deleteCourse(id);
-        return 200;
+        return true;
     }
 
-    @GetMapping("users/{userId}")
-    public List<Course> selectCourseListByUserId(@PathVariable String userId) {
-        return courseService.selectCourseListByUserId(userId);
+    @GetMapping()
+    public List<CourseDto> selectCourseDtoListByUserId(@RequestParam String userId) {
+        return courseService.selectCourseDtoListByUserId(userId);
     }
 }

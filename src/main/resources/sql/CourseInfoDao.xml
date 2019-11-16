@@ -44,10 +44,10 @@
         WHERE id = #{id}
     </select>
 
-    <select id="selectCourseInfoListByCourseId" resultType="CourseInfo">
+    <select id="selectCourseInfoByCourseId" resultType="CourseInfo">
         SELECT <include refid="column"/>
         FROM tbl_course_infos
-        WHERE courseId = #{courseId}
+        WHERE course_id = #{courseId}
     </select>
 
 </mapper>

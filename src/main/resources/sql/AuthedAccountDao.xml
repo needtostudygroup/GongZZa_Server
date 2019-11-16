@@ -16,6 +16,18 @@
         )
     </insert>
 
+    <select id="selectAuthedAccountById" resultType="AuthedAccount">
+        SELECT <include refid="column"/>
+        FROM tbl_authed_accounts
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectAuthedAccountByEmail" resultType="AuthedAccount">
+        SELECT <include refid="column"/>
+        FROM tbl_authed_accounts
+        WHERE email = #{email}
+    </select>
+
     <select id="selectAuthedAccount" resultType="AuthedAccount">
         SELECT <include refid="column"/>
         FROM tbl_authed_accounts

@@ -1,7 +1,9 @@
 package com.needtostudy.gongzza.user;
 
 import com.google.api.client.util.Base64;
+import com.needtostudy.gongzza.daos.AuthedAccountDao;
 import com.needtostudy.gongzza.dtos.UserDto;
+import com.needtostudy.gongzza.vos.AuthedAccount;
 import com.needtostudy.gongzza.vos.User;
 import com.needtostudy.gongzza.daos.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private AuthedAccountDao authedAccountDao;
+
     @Transactional
     public UserDto signUp(UserDto userDto) throws Exception {
+        AuthedAccount authedAccount = authedAccountDao.selectAuthedAccount(new AuthedAccount(userDto.getId(), userDto.getEmail()));
+        if (authedAccount == null)
+            throw new Exception();
+
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);

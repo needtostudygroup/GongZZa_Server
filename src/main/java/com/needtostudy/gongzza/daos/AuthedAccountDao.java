@@ -11,5 +11,9 @@ public interface AuthedAccountDao {
 
     AuthedAccount selectAuthedAccount(AuthedAccount authedAccount);
 
+    AuthedAccount selectAuthedAccountById(String userId);
+
+    AuthedAccount selectAuthedAccountByEmail(String email);
+
     void deleteAuthedAccount(AuthedAccount authedAccount);
 }

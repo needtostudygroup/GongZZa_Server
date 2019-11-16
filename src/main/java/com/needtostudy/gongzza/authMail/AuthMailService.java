@@ -6,7 +6,7 @@ public interface AuthMailService {
 
     AuthMail createAuthMail(String userId, String email) throws Exception;
 
-    AuthMail selectAuthMailByCode(String userId, String email, String code);
+    AuthMail authMail(String userId, String email, String code);
 
     void deleteAuthMail(String userId, String email);
 

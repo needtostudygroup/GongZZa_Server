@@ -19,9 +19,11 @@ public class AuthMailController {
     }
 
     @GetMapping("users/{userId}/email/{email}/code/{code}")
-    public AuthMail selectAuthMailByCode(@PathVariable String userId, @PathVariable String email,
+    public String authMail(@PathVariable String userId, @PathVariable String email,
                                          @PathVariable String code) {
-        return authMailService.selectAuthMailByCode(userId, email, code);
+        if (authMailService.authMail(userId, email, code) != null)
+            return "Success";
+        return "Failure";
     }
 
     @DeleteMapping("users/{userId}/email/{email}")

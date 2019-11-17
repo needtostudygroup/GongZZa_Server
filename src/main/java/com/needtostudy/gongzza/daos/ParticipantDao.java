@@ -10,9 +10,9 @@ public interface ParticipantDao {
 
     void insertParticipant(Participant participant);
 
-    void deleteParticipant(String id, int postId);
+    void deleteParticipant(String userId, int postId);
 
     List<Participant> selectParticipantListByPostId(int postId);
 
-    Participant selectParticipantById(String id, int postId);
+    Participant selectParticipantById(String userId, int postId);
 }

@@ -14,7 +14,7 @@ public class HashTagServiceImpl implements HashTagService {
     private HashTagDao hashTagDao;
 
     public void createHashTag(HashTag hashTag) {
-        hashTagDao.createHashTag(hashTag);
+        hashTagDao.insertHashTag(hashTag);
     }
 
     public List<HashTag> selectHashTagListByPostId(int postId) {

@@ -7,6 +7,16 @@ public class HashTag {
     private String title;
     private String color;
 
+    public HashTag() {
+    }
+
+    public HashTag(int id, int postId, String title, String color) {
+        this.id = id;
+        this.postId = postId;
+        this.title = title;
+        this.color = color;
+    }
+
     public int getId() {
         return id;
     }

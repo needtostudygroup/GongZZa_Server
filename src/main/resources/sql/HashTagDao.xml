@@ -9,7 +9,7 @@
         color
     </sql>
 
-    <insert id="createHashTag" parameterType="HashTag">
+    <insert id="insertHashTag" parameterType="HashTag">
         <selectKey keyProperty="id" resultType="Integer" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>

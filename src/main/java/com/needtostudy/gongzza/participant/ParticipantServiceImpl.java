@@ -17,7 +17,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Transactional
     public Participant insertParticipant(Participant participant) {
         participantDao.insertParticipant(participant);
-        return participantDao.selectParticipantById(participant.getId(), participant.getPostId());
+        return participantDao.selectParticipantById(participant.getUser().getId(), participant.getPostId());
     }
 
     public void deleteParticipant(String id, int postId) {

@@ -5,19 +5,19 @@
 
     <resultMap id="PostDto" type="PostDto">
         <id column="id" property="id"/>
-        <result column="user_id" property="userId"/>
+        <result column="userId" property="userId"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
-        <result column="title_image_url" property="titleImageUrl"/>
-        <result column="total_num_participants" property="totalNumParticipants"/>
-        <result column="meet_datetime" property="meetDateTime"/>
-        <result column="created_at" property="createdAt"/>
+        <result column="titleImageUrl" property="titleImageUrl"/>
+        <result column="totalNumParticipants" property="totalNumParticipants"/>
+        <result column="meetDateTime" property="meetDateTime"/>
+        <result column="createdAt" property="createdAt"/>
         <collection property="participantList"
                     column="{postId = id}"
-                    select="selectParticipantListByPostId"/>
+                    select="com.needtostudy.gongzza.daos.ParticipantDao.selectParticipantListByPostId"/>
         <collection property="hashTagList" ofType="HashTag"
                     column="{postId = id}"
-                    select="com.needtostudy.gongzza.daos.HashTagDao.selectHashTagByPostId"/>
+                    select="com.needtostudy.gongzza.daos.HashTagDao.selectHashTagListByPostId"/>
     </resultMap>
 
     <sql id="column">
@@ -27,45 +27,45 @@
         content,
         title_image_url titleImageUrl,
         total_num_participants totalNumParticipants,
-        current_num_participants currentNumParticipants,
         meet_datetime meetDateTime,
         created_at createdAt
     </sql>
 
-    <insert id="createPost" parameterType="Post">
-        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+    <insert id="insertPost" parameterType="Post">
         INSERT INTO tbl_posts
         VALUES (
-            #{id},
+            0,
             #{userId},
             #{title},
             #{content},
             #{titleImageUrl},
             #{totalNumParticipants},
-            #{currentNumParticipants},
             #{meetDateTime},
             NOW()
         )
+        <selectKey resultType="Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
-    <select id="selectPostById" resultMap="PostDto">
+    <select id="selectPostDtoById" resultMap="PostDto">
         SELECT <include refid="column"/>
         FROM tbl_posts
         WHERE id = #{id}
     </select>
 
-    <select id="selectRecentPostList">
+    <select id="selectRecentPostDtoList" resultMap="PostDto">
         SELECT <include refid="column"/>
-        FROM tbl_posts AS p
-        JOIN tbl_users AS u
+        FROM (
+            SELECT p.* FROM tbl_posts AS p
+            JOIN tbl_users AS u
             ON p.user_id = u.id
             AND u.school_id = #{schoolId}
+        ) AS p
         WHERE (
             SELECT COUNT(*)
             FROM tbl_course_infos as i
-            JOIN tbl_course as c
+            JOIN tbl_courses as c
                 ON i.course_id = c.id
             JOIN tbl_users as cu
                 ON cu.id = c.user_id
@@ -73,7 +73,7 @@
             WHERE p.meet_datetime >= i.start_time
             AND i.end_time >= p.meet_datetime
         ) = 0
-        ORDER BY created_at DESC OFFSET #{offset} LIMIT #{limit}
+        ORDER BY created_at DESC LIMIT #{limit}
     </select>
 
     <update id="updatePost">
@@ -83,9 +83,8 @@
             content = #{content},
             title_image_url = #{titleImageUrl},
             total_num_participants = #{totalNumParticipants},
-            current_num_participants = #{currentNumParticipants},
-            meet_date_time = #{meetDateTime},
-            NOW()
+            meet_datetime = #{meetDateTime},
+            created_at = NOW()
         WHERE id = #{id}
     </update>
 

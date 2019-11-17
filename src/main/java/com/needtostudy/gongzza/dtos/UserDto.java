@@ -15,6 +15,10 @@ public class UserDto {
     public UserDto() {
     }
 
+    public UserDto(String id) {
+        this.id = id;
+    }
+
     public UserDto(String id, String name, String password, Date birthday, int schoolId, String email) {
         this.id = id;
         this.name = name;

@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface HashTagDao {
 
-    void createHashTag(HashTag hashTag);
+    void insertHashTag(HashTag hashTag);
 
     List<HashTag> selectHashTagListByPostId(int postId);
 }

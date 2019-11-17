@@ -13,6 +13,20 @@ public class Post {
     private Date meetDateTime;
     private Date createdAt;
 
+    public Post() {
+    }
+
+    public Post(int id, String userId, String title, String content, String titleImageUrl, int totalNumParticipants, Date meetDateTime, Date createdAt) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.titleImageUrl = titleImageUrl;
+        this.totalNumParticipants = totalNumParticipants;
+        this.meetDateTime = meetDateTime;
+        this.createdAt = createdAt;
+    }
+
     public int getId() {
         return id;
     }

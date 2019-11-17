@@ -18,9 +18,10 @@ public class ParticipantController {
         return participantService.insertParticipant(participant);
     }
 
-    @DeleteMapping("{id}/posts/{postId}")
-    public void deleteParticipant(@PathVariable String id, @PathVariable int postId) {
+    @DeleteMapping("posts/{postId}")
+    public boolean deleteParticipant(@PathVariable int postId, @RequestParam String id) {
         participantService.deleteParticipant(id, postId);
+        return true;
     }
 
     @GetMapping("posts/{postId}")

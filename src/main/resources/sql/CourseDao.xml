@@ -5,7 +5,7 @@
 
     <resultMap id="CourseDto" type="CourseDto">
         <id column="id" property="id"/>
-        <result column="user_id" property="userId"/>
+        <result column="userId" property="userId"/>
         <result column="name" property="name"/>
         <result column="professor" property="professor"/>
         <collection property="courseInfoList" column="{courseId = id}" select="com.needtostudy.gongzza.daos.CourseInfoDao.selectCourseInfoByCourseId"/>

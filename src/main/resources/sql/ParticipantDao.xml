@@ -4,7 +4,7 @@
 <mapper namespace="com.needtostudy.gongzza.daos.ParticipantDao">
 
     <resultMap id="Participant" type="Participant">
-        <id column="post_id" property="postId"/>
+        <id column="postId" property="postId"/>
         <association property="user" column="{id = userId}" select="com.needtostudy.gongzza.daos.UserDao.selectUserById"/>
     </resultMap>
 
@@ -23,7 +23,7 @@
 
     <delete id="deleteParticipant">
         DELETE FROM tbl_participants
-        WHERE user_id = #{user.id}
+        WHERE user_id = #{userId}
         AND post_id = #{postId}
     </delete>
 
@@ -36,7 +36,7 @@
     <select id="selectParticipantById" resultMap="Participant">
         SELECT <include refid="column"/>
         FROM tbl_participants
-        WHERE user_id = #{user.id}
+        WHERE user_id = #{userId}
         AND post_id = #{postId}
     </select>
 

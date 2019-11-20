@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵핑될 DAO 인터페이스의 Full name 을 줍니다. -->
+<mapper namespace="com.needtostudy.gongzza.daos.TokenDao">
+
+    <sql id="column">
+        user_id         userId,
+        token,
+        last_used_at    lastUsedAt
+    </sql>
+
+    <insert id="insertToken">
+        INSERT INTO tbl_tokens
+        VALUES (
+            #{userId},
+            #{token},
+            NOW()
+        )
+    </insert>
+
+    <select id="selectToken" resultType="Token">
+        SELECT <include refid="column"/>
+        FROM tbl_tokens
+        WHERE user_id = #{userId}
+        AND token = #{token}
+    </select>
+
+    <select id="selectTokenByUserId" resultType="Token">
+        SELECT <include refid="column"/>
+        FROM tbl_tokens
+        WHERE user_id = #{userId}
+    </select>
+</mapper>

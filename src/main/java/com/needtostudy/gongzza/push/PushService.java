@@ -1,11 +1,42 @@
 package com.needtostudy.gongzza.push;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.springframework.stereotype.Service;
+
+import java.io.FileInputStream;
 
 @Service
 public class PushService {
 
-//    @Autowired
+    private static String FIREBASE_SERVER_KEY = "AAAAqMamTD8:APA91bGPLjGGDOx_GLcZtUa1IlxacOYhxiojxdLOJbuME6OQ1pUnfHjpCle6hRGH6XhFHso6F32oGQE2z_4IPPOmlZYkAmxK96LO5egybtkQORRezCFSSSKH8_BC9K1mEOnOALwos2US";
+
+    private FirebaseApp firebaseApp;
+
+    public PushService() {
+        authExplicit(getClass().getClassLoader().getResource("gongzza-7492c-firebase-adminsdk-wlirl-9c5d1871ca.json").getFile());
+    }
+
+    private void authExplicit(String jsonPath) {
+        try {
+            FileInputStream serviceAccountFile = new FileInputStream(jsonPath);
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccountFile))
+                    .setDatabaseUrl("https://gongzza-7492c.firebaseio.com")
+                    .build();
+
+            try {
+                firebaseApp = FirebaseApp.getInstance();
+            } catch (IllegalStateException e) {
+                firebaseApp = FirebaseApp.initializeApp(options);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    @Autowired
 //    private TokenDao tokenDao;
 //
 //    private static final String SERVER_KEY = "AAAA3mbFxlM:APA91bH7ePjf9A3xL1Ccj3lOWwmxca7Buq0cC-ysImaxeMEDy8Nn0NQpEeqC5ceeB3c36EUMNRXr-VPaw--xBem8UUTO2ih_OSzw33Hyk3i1GNlCfcKHBDJHd5fKbryEi5rISxQSVvrQ";

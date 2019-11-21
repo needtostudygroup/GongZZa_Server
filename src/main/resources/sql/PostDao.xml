@@ -61,6 +61,7 @@
             JOIN tbl_users AS u
             ON p.user_id = u.id
             AND u.school_id = #{schoolId}
+            AND p.meet_datetime >= NOW()
         ) AS p
         WHERE (
             SELECT COUNT(*)

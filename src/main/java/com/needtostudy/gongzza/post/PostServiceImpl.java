@@ -37,6 +37,10 @@ public class PostServiceImpl implements PostService {
         return postDao.selectPostDtoById(postDto.getId());
     }
 
+    public List<PostDto> selectUserEnrolledPost(String userId) {
+        return postDao.selectUserEnrolledPost(userId);
+    }
+
     public PostDto selectPostDtoById(int id) {
         return postDao.selectPostDtoById(id);
     }

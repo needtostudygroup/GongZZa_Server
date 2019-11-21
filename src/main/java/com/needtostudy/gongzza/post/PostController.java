@@ -33,6 +33,11 @@ public class PostController {
         return postService.selectRecentPostDtoList(userId, limit, schoolId);
     }
 
+    @GetMapping("users")
+    public List<PostDto> selectUserEnrolledPost(@RequestParam String userId) {
+        return postService.selectUserEnrolledPost(userId);
+    }
+
     @PutMapping("{id}")
     public boolean updatePost(@PathVariable int id, @RequestBody Post post) {
         post.setId(id);

@@ -14,6 +14,8 @@ public interface PostDao {
 
     PostDto selectPostDtoById(int id);
 
+    List<PostDto> selectUserEnrolledPost(String userId);
+
     List<PostDto> selectRecentPostDtoList(@Param("userId") String userId,
                                           @Param("limit") int limit,
                                           @Param("schoolId") int schoolId);

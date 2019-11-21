@@ -3,6 +3,7 @@ package com.needtostudy.gongzza.vos;
 import java.util.Date;
 
 public class ChatLog {
+
     private int id;
     private int postId;
     private String senderId;

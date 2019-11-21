@@ -54,6 +54,16 @@
         WHERE id = #{id}
     </select>
 
+    <select id="selectUserEnrolledPost" resultMap="PostDto">
+        SELECT <include refid="column"/>
+        FROM (
+            SELECT po.* FROM tbl_posts po
+            JOIN tbl_participants pa
+            ON po.id = pa.post_id
+            AND pa.user_id = #{userId}
+        ) as p
+    </select>
+
     <select id="selectRecentPostDtoList" resultMap="PostDto">
         SELECT <include refid="column"/>
         FROM (

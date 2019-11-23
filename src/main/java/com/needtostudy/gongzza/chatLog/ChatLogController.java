@@ -1,9 +1,12 @@
 package com.needtostudy.gongzza.chatLog;
 
+import com.needtostudy.gongzza.dtos.PostChatDto;
 import com.needtostudy.gongzza.vos.ChatLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -13,11 +16,17 @@ public class ChatLogController {
     @Autowired
     private ChatLogService chatLogService;
 
-    @GetMapping("")
-    public List<ChatLog> selectChatLogList(@RequestParam int postId,
-                                           @RequestParam int offset,
-                                           @RequestParam int limit) {
-        return chatLogService.selectChatLogList(postId, offset, limit);
+    @GetMapping("posts/{postId}")
+    public List<ChatLog> selectChatLogListAfterDatetime(@PathVariable int postId,
+                                                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssSSS") Date datetime) {
+        return chatLogService.selectChatLogListAfterDatetime(postId, datetime);
+    }
+
+    @GetMapping("users")
+    public List<PostChatDto> selectPostChatListByUserAfterDatetime(
+            @RequestParam String userId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssSSS") Date datetime) {
+        return chatLogService.selectPostChatListByUserAfterDatetime(userId, datetime);
     }
 
     @PostMapping("")

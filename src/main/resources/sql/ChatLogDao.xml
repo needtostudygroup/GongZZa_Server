@@ -3,21 +3,35 @@
 <!-- 맵핑될 DAO 인터페이스의 Full name 을 줍니다. -->
 <mapper namespace="com.needtostudy.gongzza.daos.ChatLogDao">
 
+    <resultMap id="PostChatDto" type="PostChatDto" extends="com.needtostudy.gongzza.daos.PostDao.PostDto">
+        <collection property="chatLogList" column="{postId = id, datetime = datetime}" select="selectChatLogListAfterDatetime"/>
+    </resultMap>
+
     <sql id="column">
         id,
         post_id     postId,
         sender_id   senderId,
         content,
-        sended_at   sendedAt
+        sent_at   sentAt
     </sql>
 
-    <select id="selectChatLogList" resultType="ChatLog">
+    <select id="selectChatLogListAfterDatetime" resultType="ChatLog">
         SELECT <include refid="column"/>
         FROM tbl_chat_logs
         WHERE post_id = #{postId}
-        ORDER BY sended_at DESC
-        OFFSET #{offset}
-        LIMIT #{limit}
+        AND sent_at > #{datetime}
+        ORDER BY sent_at DESC
+    </select>
+
+    <select id="selectPostChatListByUserAfterDatetime" resultMap="PostChatDto">
+        SELECT <include refid="com.needtostudy.gongzza.daos.PostDao.column"/>, #{datetime} datetime
+        FROM (
+            SELECT po.*
+            FROM tbl_posts AS po
+            JOIN tbl_participants AS pa
+            ON po.id = pa.post_id
+            AND pa.user_id = #{userId}
+        ) AS p
     </select>
 
     <select id="selectChatLog" resultType="ChatLog">

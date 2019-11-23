@@ -8,7 +8,7 @@ public class ChatLog {
     private int postId;
     private String senderId;
     private String content;
-    private Date sendedAt;
+    private Date sentAt;
 
     public int getId() {
         return id;
@@ -42,11 +42,11 @@ public class ChatLog {
         this.content = content;
     }
 
-    public Date getSendedAt() {
-        return sendedAt;
+    public Date getSentAt() {
+        return sentAt;
     }
 
-    public void setSendedAt(Date sendedAt) {
-        this.sendedAt = sendedAt;
+    public void setSentAt(Date sentAt) {
+        this.sentAt = sentAt;
     }
 }

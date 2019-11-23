@@ -5,9 +5,6 @@
 </head>
 
 <body>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  공짜서버
 </body>
-<script src="/dist/build.js"></script>
 </html>

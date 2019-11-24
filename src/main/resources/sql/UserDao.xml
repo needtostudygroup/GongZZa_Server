@@ -22,7 +22,7 @@
             #{salt},
             #{birthday},
             #{name},
-            NOW(),
+            UTC_TIMESTAMP(),
             #{schoolId},
             #{email}
         )

@@ -14,7 +14,7 @@
         VALUES (
             #{userId},
             #{token},
-            NOW()
+            UTC_TIMESTAMP()
         )
     </insert>
 

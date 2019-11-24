@@ -50,7 +50,7 @@
             #{postId},
             #{senderId},
             #{content},
-            NOW()
+            UTC_TIMESTAMP()
         )
     </insert>
 

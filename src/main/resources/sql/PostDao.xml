@@ -41,7 +41,7 @@
             #{titleImageUrl},
             #{totalNumParticipants},
             #{meetDateTime},
-            NOW()
+            UTC_TIMESTAMP()
         )
         <selectKey resultType="Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
@@ -71,7 +71,7 @@
             JOIN tbl_users AS u
             ON p.user_id = u.id
             AND u.school_id = #{schoolId}
-            AND p.meet_datetime >= NOW()
+            AND p.meet_datetime >= UTC_TIMESTAMP()
         ) AS p
         WHERE (
             SELECT COUNT(*)
@@ -95,7 +95,7 @@
             title_image_url = #{titleImageUrl},
             total_num_participants = #{totalNumParticipants},
             meet_datetime = #{meetDateTime},
-            created_at = NOW()
+            created_at = UTC_TIMESTAMP()
         WHERE id = #{id}
     </update>
 

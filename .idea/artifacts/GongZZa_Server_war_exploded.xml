@@ -108,6 +108,8 @@
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:5.1.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-websocket:5.1.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:2.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.2.1.RELEASE" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="GongZZa_Server/web/Web" />

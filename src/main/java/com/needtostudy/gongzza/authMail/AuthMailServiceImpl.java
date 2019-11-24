@@ -1,10 +1,10 @@
 package com.needtostudy.gongzza.authMail;
 
 import com.needtostudy.gongzza.daos.AuthMailDao;
-import com.needtostudy.gongzza.daos.AuthedAccountDao;
+import com.needtostudy.gongzza.daos.AuthenticatedAccountDao;
 import com.needtostudy.gongzza.daos.UserDao;
 import com.needtostudy.gongzza.vos.AuthMail;
-import com.needtostudy.gongzza.vos.AuthedAccount;
+import com.needtostudy.gongzza.vos.AuthenticatedAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -24,15 +24,15 @@ public class AuthMailServiceImpl implements AuthMailService {
     private AuthMailDao authMailDao;
 
     @Autowired
-    private AuthedAccountDao authedAccountDao;
+    private AuthenticatedAccountDao authedAccountDao;
 
     @Autowired
     private UserDao userDao;
 
     @Transactional
     public AuthMail createAuthMail(String userId, String email) throws Exception {
-        if (userDao.selectUserById(userId) != null || authedAccountDao.selectAuthedAccountById(userId) != null ||
-            userDao.selectUserByEmail(email) != null || authedAccountDao.selectAuthedAccountByEmail(email) != null)
+        if (userDao.selectUserById(userId) != null || authedAccountDao.selectAuthenticatedAccountById(userId) != null ||
+            userDao.selectUserByEmail(email) != null || authedAccountDao.selectAuthenticatedAccountByEmail(email) != null)
             throw new Exception();
 
         AuthMail authMail = new AuthMail(userId, email);
@@ -45,8 +45,8 @@ public class AuthMailServiceImpl implements AuthMailService {
     public AuthMail authMail(String userId, String email, String code) {
         AuthMail authMail = authMailDao.selectAuthMailByCode(userId, email, code);
         if (authMail != null) {
-            authedAccountDao.insertAuthedAccount(
-                    new AuthedAccount(authMail.getUserId(), authMail.getEmail())
+            authedAccountDao.insertAuthenticatedAccount(
+                    new AuthenticatedAccount(authMail.getUserId(), authMail.getEmail())
             );
             authMailDao.deleteAuthMail(
                     userId, email
@@ -66,9 +66,9 @@ public class AuthMailServiceImpl implements AuthMailService {
                 helper.setFrom("gongzza.co.kr");
                 helper.setTo(authMail.getEmail());
                 helper.setSubject("[공짜] 계정 인증 받으세요! " + authMail.getUserId() + "님");
-                helper.setText("<a href=\"http://localhost:1234/authMails/users/" +
-                        authMail.getUserId() + "/email/" +
-                        authMail.getEmail() + "/code/" + authMail.getCode() + "\">Click here!</a>", true);
+                helper.setText("<a href=\"http://114.206.137.114:8080/authMails/code/" + authMail.getCode() + "?" +
+                        "userId=" + authMail.getUserId() +
+                        "&email=" + authMail.getEmail() + "\">Click here!</a>", true);
             }
         };
 

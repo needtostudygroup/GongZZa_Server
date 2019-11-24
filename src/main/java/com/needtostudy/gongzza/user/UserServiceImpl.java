@@ -1,22 +1,17 @@
 package com.needtostudy.gongzza.user;
 
 import com.google.api.client.util.Base64;
-import com.needtostudy.gongzza.daos.AuthedAccountDao;
+import com.needtostudy.gongzza.daos.AuthenticatedAccountDao;
 import com.needtostudy.gongzza.dtos.UserDto;
-import com.needtostudy.gongzza.vos.AuthedAccount;
+import com.needtostudy.gongzza.vos.AuthenticatedAccount;
 import com.needtostudy.gongzza.vos.User;
 import com.needtostudy.gongzza.daos.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.mail.internet.MimeMessage;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
@@ -27,12 +22,16 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
-    private AuthedAccountDao authedAccountDao;
+    private AuthenticatedAccountDao authenticatedAccountDao;
 
-    @Transactional
     public UserDto signUp(UserDto userDto) throws Exception {
-        AuthedAccount authedAccount = authedAccountDao.selectAuthedAccount(new AuthedAccount(userDto.getId(), userDto.getEmail()));
-        if (authedAccount == null)
+        AuthenticatedAccount authenticatedAccount = authenticatedAccountDao.selectAuthenticatedAccount(
+                new AuthenticatedAccount(
+                    userDto.getId(),
+                    userDto.getEmail()
+                )
+        );
+        if (authenticatedAccount == null)
             throw new Exception();
 
         SecureRandom random = new SecureRandom();
@@ -44,6 +43,7 @@ public class UserServiceImpl implements UserService {
         User user = new User(userDto, Base64.encodeBase64String(salt));
         user.setPassword(Base64.encodeBase64String(factory.generateSecret(spec).getEncoded()));
         userDao.createUser(user);
+        authenticatedAccountDao.deleteAuthenticatedAccount(authenticatedAccount);
         return userDao.selectUserByIdPw(user.getId(), user.getPassword());
     }
 

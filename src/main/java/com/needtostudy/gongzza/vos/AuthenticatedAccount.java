@@ -1,18 +1,14 @@
 package com.needtostudy.gongzza.vos;
 
-import com.google.api.client.util.Base64;
-
-import java.security.MessageDigest;
-
-public class AuthedAccount {
+public class AuthenticatedAccount {
 
     private String userId;
     private String email;
 
-    public AuthedAccount() {
+    public AuthenticatedAccount() {
     }
 
-    public AuthedAccount(String userId, String email) {
+    public AuthenticatedAccount(String userId, String email) {
         this.userId = userId;
         this.email = email;
     }

@@ -21,6 +21,11 @@ public class UserController {
     }
 
     @GetMapping("")
+    public UserDto getUser(@RequestParam String id) throws Exception {
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("login")
     public UserDto login(@RequestParam String id, @RequestParam String password) throws Exception {
         return userService.getUserByIdPw(id, password);
     }

@@ -6,6 +6,8 @@ public interface UserService {
 
     UserDto signUp(UserDto user) throws Exception;
 
+    UserDto getUserById(String id) throws Exception;
+
     UserDto getUserByIdPw(String id, String password) throws Exception;
 
     String findId(String name, String email);

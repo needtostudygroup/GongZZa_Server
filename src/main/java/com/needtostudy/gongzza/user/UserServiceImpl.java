@@ -47,6 +47,10 @@ public class UserServiceImpl implements UserService {
         return userDao.selectUserByIdPw(user.getId(), user.getPassword());
     }
 
+    public UserDto getUserById(String id) throws Exception {
+        return userDao.selectUserById(id);
+    }
+
     public UserDto getUserByIdPw(String id, String password) throws Exception {
         String salt = userDao.selectSaltByUserId(id);
         if (salt == null)

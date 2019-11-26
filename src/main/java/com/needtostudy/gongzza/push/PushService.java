@@ -3,14 +3,35 @@ package com.needtostudy.gongzza.push;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.*;
+import com.needtostudy.gongzza.daos.TokenDao;
+import com.needtostudy.gongzza.participant.ParticipantService;
+import com.needtostudy.gongzza.post.PostService;
+import com.needtostudy.gongzza.vos.ChatLog;
+import com.needtostudy.gongzza.vos.Participant;
+import com.needtostudy.gongzza.vos.Post;
+import com.needtostudy.gongzza.vos.Token;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PushService {
 
     private static String FIREBASE_SERVER_KEY = "AAAAqMamTD8:APA91bGPLjGGDOx_GLcZtUa1IlxacOYhxiojxdLOJbuME6OQ1pUnfHjpCle6hRGH6XhFHso6F32oGQE2z_4IPPOmlZYkAmxK96LO5egybtkQORRezCFSSSKH8_BC9K1mEOnOALwos2US";
+
+    @Autowired
+    private TokenDao tokenDao;
+
+    @Autowired
+    private ParticipantService participantService;
+
+    @Autowired
+    private PostService postService;
 
     private FirebaseApp firebaseApp;
 
@@ -36,70 +57,34 @@ public class PushService {
         }
     }
 
-    //    @Autowired
-//    private TokenDao tokenDao;
-//
-//    private static final String SERVER_KEY = "AAAA3mbFxlM:APA91bH7ePjf9A3xL1Ccj3lOWwmxca7Buq0cC-ysImaxeMEDy8Nn0NQpEeqC5ceeB3c36EUMNRXr-VPaw--xBem8UUTO2ih_OSzw33Hyk3i1GNlCfcKHBDJHd5fKbryEi5rISxQSVvrQ";
-//
-//    private FirebaseApp firebaseApp;
-//
-//    public PushService() {
-//        authExplicit(getClass().getClassLoader().getResource("mn09-f13c1-firebase-adminsdk-o62a0-b88b413be0.json").getFile());
-//    }
-//
-//    void authExplicit(String jsonPath) {
-//        try {
-//            FileInputStream serviceAccount =
-//                    new FileInputStream(jsonPath);
-//
-//            FirebaseOptions options = new FirebaseOptions.Builder()
-//                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-////                .setDatabaseUrl("https://mn09-f13c1.firebaseio.com")
-//                    .build();
-//
-//            try {
-//                firebaseApp = FirebaseApp.getInstance();
-//            } catch (IllegalStateException e) {
-//                firebaseApp = FirebaseApp.initializeApp(options);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void push(Push push) throws Exception {
-//        List<Token> tokenList = tokenDao.selectAllUsersByServiceId(push.getServiceId());
-//        List<String> tokenStringList = new ArrayList<String>();
-//        for (Token token : tokenList) {
-//            tokenStringList.add(token.getToken());
-//        }
-//
-//        MulticastMessage message = MulticastMessage.builder()
-//                .putData("url", push.getUrl())
-//                .putData("title", push.getTitle())
-//                .putData("content", push.getContent())
-//                .putData("imageUrl", push.getImageUrl())
-//                .setNotification(
-//                        new Notification(
-//                                push.getTitle(),
-//                                push.getContent(),
-//                                push.getImageUrl()
-//                        )
-//                )
-//                .setApnsConfig(ApnsConfig.builder()
-//                        .setAps(Aps.builder()
-//                                .setMutableContent(true)
-//                                .setContentAvailable(true)
-//                                .build())
-//                        .setFcmOptions(
-//                                ApnsFcmOptions.builder()
-//                                        .setImage(push.getImageUrl())
-//                                        .build())
-//                        .build())
-//                .addAllTokens(tokenStringList)
-//                .build();
-//
-//        BatchResponse response = FirebaseMessaging.getInstance(firebaseApp).sendMulticast(message);
-//        System.out.println("Push Success " +response.getSuccessCount() + "/" + tokenList.size());
-//    }
+    public void push(ChatLog chatLog) throws Exception {
+        List<Participant> participantList = participantService.selectParticipantListByPostId(chatLog.getPostId());
+        Post post = postService.selectPostDtoById(chatLog.getPostId());
+
+        List<String> tokenList = new ArrayList<String>();
+        for (Participant participant : participantList) {
+            List<Token> participantsTokenList = tokenDao.selectTokenByUserId(participant.getUser().getId());
+            if (participantsTokenList != null) {
+                for (Token token : participantsTokenList) {
+                    System.out.println("token = " + token.getToken());
+                    tokenList.add(token.getToken());
+                }
+            }
+        }
+
+        MulticastMessage message = MulticastMessage.builder()
+                .addAllTokens(tokenList)
+                .putData("POST", String.valueOf(chatLog.getPostId()))
+                .putData("SENDER", chatLog.getSenderId())
+                .putData("ID", String.valueOf(chatLog.getId()))
+                .setNotification(new Notification(
+                        post.getTitle(), chatLog.getContent()
+                ))
+                .build();
+
+        BatchResponse response = FirebaseMessaging.getInstance(firebaseApp).sendMulticast(message);
+        for (SendResponse res : response.getResponses()) {
+            System.out.println(res.getMessageId());
+        }
+    }
 }

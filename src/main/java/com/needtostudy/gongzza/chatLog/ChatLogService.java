@@ -13,5 +13,5 @@ public interface ChatLogService {
 
     List<PostChatDto> selectPostChatListByUserAfterDatetime(String userId, Date datetime);
 
-    ChatLog insertChatLog(ChatLog chatLog);
+    ChatLog insertChatLog(ChatLog chatLog) throws Exception;
 }

@@ -2,6 +2,7 @@ package com.needtostudy.gongzza.chatLog;
 
 import com.needtostudy.gongzza.daos.ChatLogDao;
 import com.needtostudy.gongzza.dtos.PostChatDto;
+import com.needtostudy.gongzza.push.PushService;
 import com.needtostudy.gongzza.vos.ChatLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class ChatLogServiceImpl implements ChatLogService {
     @Autowired
     private ChatLogDao chatLogDao;
 
+    @Autowired
+    private PushService pushService;
+
+
     public List<ChatLog> selectChatLogListAfterDatetime(int postId, Date datetime) {
         return chatLogDao.selectChatLogListAfterDatetime(postId, datetime);
     }
@@ -25,7 +30,9 @@ public class ChatLogServiceImpl implements ChatLogService {
     }
 
     @Transactional
-    public ChatLog insertChatLog(ChatLog chatLog) {
+    public ChatLog insertChatLog(ChatLog chatLog) throws Exception {
+        pushService.push(chatLog);
+
         chatLogDao.insertChatLog(chatLog);
         return chatLogDao.selectChatLog(chatLog.getId());
     }

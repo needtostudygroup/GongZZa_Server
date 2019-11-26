@@ -1,6 +1,7 @@
 package com.needtostudy.gongzza.chatLog;
 
 import com.needtostudy.gongzza.dtos.PostChatDto;
+import com.needtostudy.gongzza.push.PushService;
 import com.needtostudy.gongzza.vos.ChatLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,7 +31,7 @@ public class ChatLogController {
     }
 
     @PostMapping("")
-    public ChatLog insertChatLog(@RequestBody ChatLog chatLog) {
+    public ChatLog insertChatLog(@RequestBody ChatLog chatLog) throws Exception {
         return chatLogService.insertChatLog(chatLog);
     }
 }

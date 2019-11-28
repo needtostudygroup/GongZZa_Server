@@ -29,8 +29,10 @@ public class PostController {
     @GetMapping("schools/{schoolId}/recent")
     public List<PostDto> selectRecentPostDtoList(@PathVariable int schoolId,
                                                  @RequestParam String userId,
-                                                 @RequestParam int limit) {
-        return postService.selectRecentPostDtoList(userId, limit, schoolId);
+                                                 @RequestParam int limit,
+                                                 @RequestParam(required = false, defaultValue = "") String searchKeyword,
+                                                 @RequestParam(required = false, value = "hashTagList") String[] hashTagList) {
+        return postService.selectRecentPostDtoList(userId, limit, schoolId, searchKeyword, hashTagList);
     }
 
     @GetMapping("users")

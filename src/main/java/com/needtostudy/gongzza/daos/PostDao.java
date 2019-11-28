@@ -18,7 +18,9 @@ public interface PostDao {
 
     List<PostDto> selectRecentPostDtoList(@Param("userId") String userId,
                                           @Param("limit") int limit,
-                                          @Param("schoolId") int schoolId);
+                                          @Param("schoolId") int schoolId,
+                                          @Param("searchKeyword") String searchKeyword,
+                                          @Param("hashTagList") String[] hashTagList);
 
     void updatePost(Post post);
 

@@ -25,6 +25,7 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private HashTagDao hashTagDao;
 
+    @Transactional
     public PostDto insertPost(PostDto postDto) {
         postDao.insertPost(postDto);
         Participant participant = new Participant(postDto.getUserId(), postDto.getId());
@@ -45,8 +46,8 @@ public class PostServiceImpl implements PostService {
         return postDao.selectPostDtoById(id);
     }
 
-    public List<PostDto> selectRecentPostDtoList(String userId, int limit, int schoolId) {
-        return postDao.selectRecentPostDtoList(userId, limit, schoolId);
+    public List<PostDto> selectRecentPostDtoList(String userId, int limit, int schoolId, String searchKeyword, String[] hashTagList) {
+        return postDao.selectRecentPostDtoList(userId, limit, schoolId, searchKeyword, hashTagList);
     }
 
     public void updatePost(Post post) {

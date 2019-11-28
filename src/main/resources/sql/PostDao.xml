@@ -72,6 +72,7 @@
             ON p.user_id = u.id
             AND u.school_id = #{schoolId}
             AND p.meet_datetime >= UTC_TIMESTAMP()
+            AND p.title LIKE ('%' #{searchKeyword} '%')
         ) AS p
         WHERE (
             SELECT COUNT(*)
@@ -84,6 +85,18 @@
             WHERE p.meet_datetime >= i.start_time
             AND i.end_time >= p.meet_datetime
         ) = 0
+        <if test="hashTagList != null">
+        AND (
+            SELECT COUNT(*)
+            FROM tbl_hashtags as h
+            WHERE h.post_id = p.id
+            AND h.title IN (
+                <foreach collection="hashTagList" item="hashTag" separator=",">
+                    #{hashTag}
+                </foreach>
+            )
+        ) > 0
+        </if>
         ORDER BY created_at DESC LIMIT #{limit}
     </select>
 

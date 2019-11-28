@@ -11,7 +11,7 @@ public interface PostService {
 
     PostDto selectPostDtoById(int id);
 
-    List<PostDto> selectRecentPostDtoList(String userId, int limit, int schoolId);
+    List<PostDto> selectRecentPostDtoList(String userId, int limit, int schoolId, String searchKeyword, String[] hashTagList);
 
     List<PostDto> selectUserEnrolledPost(String userId);
 

@@ -1,29 +1,31 @@
 package com.needtostudy.gongzza.vos;
 
+import java.util.Date;
+
 public class CourseInfo {
     private int id;
     private int courseId;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private int day;
 
     public CourseInfo() {
     }
-    public CourseInfo(int id, int courseId, String startTime, String endTime, int day) {
+    public CourseInfo(int id, int courseId, Date startTime, Date endTime, int day) {
         this.id = id;
         this.courseId = courseId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.day = day;
     }
-    public CourseInfo(int courseId, String startTime, String endTime, int day) {
+    public CourseInfo(int courseId, Date startTime, Date endTime, int day) {
         this.courseId = courseId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.day = day;
     }
 
-    public CourseInfo(String startTime, String endTime, int day) {
+    public CourseInfo(Date startTime, Date endTime, int day) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.day = day;
@@ -45,19 +47,19 @@ public class CourseInfo {
         this.courseId = courseId;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

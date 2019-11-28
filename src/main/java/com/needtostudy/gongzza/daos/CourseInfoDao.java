@@ -1,6 +1,5 @@
 package com.needtostudy.gongzza.daos;
 
-import com.needtostudy.gongzza.dtos.CourseDto;
 import com.needtostudy.gongzza.vos.CourseInfo;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +16,5 @@ public interface CourseInfoDao {
 
     CourseInfo selectCourseInfoById(int id);
 
-    List<CourseDto> selectCourseInfoByCourseId(int courseId);
+    List<CourseInfo> selectCourseInfoByCourseId(int courseId);
 }

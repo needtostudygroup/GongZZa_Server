@@ -82,8 +82,7 @@
             JOIN tbl_users as cu
                 ON cu.id = c.user_id
                 AND cu.id = #{userId}
-            WHERE p.meet_datetime >= i.start_time
-            AND i.end_time >= p.meet_datetime
+            WHERE DATE_FORMAT(p.meet_datetime,'%h%i') BETWEEN DATE_FORMAT(i.start_time, '%h%i')  AND DATE_FORMAT(i.end_time, '%h%i')
         ) = 0
         <if test="hashTagList != null">
         AND (

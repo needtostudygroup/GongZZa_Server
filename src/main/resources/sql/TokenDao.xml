@@ -10,7 +10,7 @@
     </sql>
 
     <insert id="insertToken">
-        INSERT INTO tbl_tokens
+        INSERT INTO tbl_gz_tokens
         VALUES (
             #{userId},
             #{token},
@@ -20,14 +20,14 @@
 
     <select id="selectToken" resultType="Token">
         SELECT <include refid="column"/>
-        FROM tbl_tokens
+        FROM tbl_gz_tokens
         WHERE user_id = #{userId}
         AND token = #{token}
     </select>
 
     <select id="selectTokenByUserId" resultType="Token">
         SELECT <include refid="column"/>
-        FROM tbl_tokens
+        FROM tbl_gz_tokens
         WHERE user_id = #{userId}
     </select>
 </mapper>

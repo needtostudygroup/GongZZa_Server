@@ -32,7 +32,7 @@
     </sql>
 
     <insert id="insertPost" parameterType="Post">
-        INSERT INTO tbl_posts
+        INSERT INTO tbl_gz_posts
         VALUES (
             0,
             #{userId},
@@ -50,15 +50,15 @@
 
     <select id="selectPostDtoById" resultMap="PostDto">
         SELECT <include refid="column"/>
-        FROM tbl_posts
+        FROM tbl_gz_posts
         WHERE id = #{id}
     </select>
 
     <select id="selectUserEnrolledPost" resultMap="PostDto">
         SELECT <include refid="column"/>
         FROM (
-            SELECT po.* FROM tbl_posts po
-            JOIN tbl_participants pa
+            SELECT po.* FROM tbl_gz_posts po
+            JOIN tbl_gz_participants pa
             ON po.id = pa.post_id
             AND pa.user_id = #{userId}
         ) as p
@@ -67,8 +67,8 @@
     <select id="selectRecentPostDtoList" resultMap="PostDto">
         SELECT <include refid="column"/>
         FROM (
-            SELECT p.* FROM tbl_posts AS p
-            JOIN tbl_users AS u
+            SELECT p.* FROM tbl_gz_posts AS p
+            JOIN tbl_gz_users AS u
             ON p.user_id = u.id
             AND u.school_id = #{schoolId}
             AND p.meet_datetime >= UTC_TIMESTAMP()
@@ -76,10 +76,10 @@
         ) AS p
         WHERE (
             SELECT COUNT(*)
-            FROM tbl_course_infos as i
-            JOIN tbl_courses as c
+            FROM tbl_gz_course_infos as i
+            JOIN tbl_gz_courses as c
                 ON i.course_id = c.id
-            JOIN tbl_users as cu
+            JOIN tbl_gz_users as cu
                 ON cu.id = c.user_id
                 AND cu.id = #{userId}
             WHERE DATE_FORMAT(p.meet_datetime,'%h%i') BETWEEN DATE_FORMAT(i.start_time, '%h%i')  AND DATE_FORMAT(i.end_time, '%h%i')
@@ -87,7 +87,7 @@
         <if test="hashTagList != null">
         AND (
             SELECT COUNT(*)
-            FROM tbl_hashtags as h
+            FROM tbl_gz_hashtags as h
             WHERE h.post_id = p.id
             AND h.title IN (
                 <foreach collection="hashTagList" item="hashTag" separator=",">
@@ -100,7 +100,7 @@
     </select>
 
     <update id="updatePost">
-        UPDATE tbl_posts
+        UPDATE tbl_gz_posts
         SET
             title = #{title},
             content = #{content},
@@ -112,7 +112,7 @@
     </update>
 
     <delete id="deletePost">
-        DELETE FROM tbl_posts
+        DELETE FROM tbl_gz_posts
         WHERE id = #{id}
     </delete>
 

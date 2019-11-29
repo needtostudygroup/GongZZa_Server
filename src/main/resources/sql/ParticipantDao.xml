@@ -14,7 +14,7 @@
     </sql>
 
     <insert id="insertParticipant" parameterType="Participant">
-        INSERT INTO tbl_participants
+        INSERT INTO tbl_gz_participants
         VALUES (
             #{user.id},
             #{postId}
@@ -22,20 +22,20 @@
     </insert>
 
     <delete id="deleteParticipant">
-        DELETE FROM tbl_participants
+        DELETE FROM tbl_gz_participants
         WHERE user_id = #{userId}
         AND post_id = #{postId}
     </delete>
 
     <select id="selectParticipantListByPostId" resultMap="Participant">
         SELECT <include refid="column"/>
-        FROM tbl_participants
+        FROM tbl_gz_participants
         WHERE post_id = #{postId}
     </select>
 
     <select id="selectParticipantById" resultMap="Participant">
         SELECT <include refid="column"/>
-        FROM tbl_participants
+        FROM tbl_gz_participants
         WHERE user_id = #{userId}
         AND post_id = #{postId}
     </select>

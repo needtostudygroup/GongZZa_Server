@@ -9,7 +9,7 @@
     </sql>
 
     <insert id="insertAuthenticatedAccount" parameterType="AuthenticatedAccount">
-        INSERT INTO tbl_authed_accounts
+        INSERT INTO tbl_gz_authenticated_accounts
         VALUES (
             #{userId},
             #{email}
@@ -18,25 +18,25 @@
 
     <select id="selectAuthenticatedAccountById" resultType="AuthenticatedAccount">
         SELECT <include refid="column"/>
-        FROM tbl_authed_accounts
+        FROM tbl_gz_authenticated_accounts
         WHERE user_id = #{userId}
     </select>
 
     <select id="selectAuthenticatedAccountByEmail" resultType="AuthenticatedAccount">
         SELECT <include refid="column"/>
-        FROM tbl_authed_accounts
+        FROM tbl_gz_authenticated_accounts
         WHERE email = #{email}
     </select>
 
     <select id="selectAuthenticatedAccount" resultType="AuthenticatedAccount">
         SELECT <include refid="column"/>
-        FROM tbl_authed_accounts
+        FROM tbl_gz_authenticated_accounts
         WHERE user_id = #{userId}
         AND email = #{email}
     </select>
 
     <delete id="deleteAuthenticatedAccount">
-        DELETE FROM tbl_authed_accounts
+        DELETE FROM tbl_gz_authenticated_accounts
         WHERE user_id = #{userId}
         AND email = #{email}
     </delete>

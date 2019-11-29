@@ -17,7 +17,7 @@
 
     <select id="selectChatLogListAfterDatetime" resultType="ChatLog">
         SELECT <include refid="column"/>
-        FROM tbl_chat_logs
+        FROM tbl_gz_chat_logs
         WHERE post_id = #{postId}
         AND sent_at > #{datetime}
         ORDER BY sent_at DESC
@@ -27,8 +27,8 @@
         SELECT <include refid="com.needtostudy.gongzza.daos.PostDao.column"/>, #{datetime} datetime
         FROM (
             SELECT po.*
-            FROM tbl_posts AS po
-            JOIN tbl_participants AS pa
+            FROM tbl_gz_posts AS po
+            JOIN tbl_gz_participants AS pa
             ON po.id = pa.post_id
             AND pa.user_id = #{userId}
         ) AS p
@@ -36,7 +36,7 @@
 
     <select id="selectChatLog" resultType="ChatLog">
         SELECT <include refid="column"/>
-        FROM tbl_chat_logs
+        FROM tbl_gz_chat_logs
         WHERE id = #{id}
     </select>
 
@@ -44,7 +44,7 @@
         <selectKey resultType="Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO tbl_chat_logs
+        INSERT INTO tbl_gz_chat_logs
         VALUES (
             #{id},
             #{postId},

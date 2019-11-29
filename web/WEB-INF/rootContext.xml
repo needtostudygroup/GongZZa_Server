@@ -18,9 +18,9 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/gongzza?useSSL=true&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC&amp;autoReconnection=true"/>
-        <property name="username" value="gongzza"/>
-        <property name="password" value="gongzza"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/n09app?useSSL=true&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC&amp;autoReconnection=true"/>
+        <property name="username" value="n09app"/>
+        <property name="password" value="n09app!ftp"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

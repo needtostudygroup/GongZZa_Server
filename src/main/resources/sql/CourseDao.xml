@@ -22,7 +22,7 @@
         <selectKey resultType="Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO tbl_courses
+        INSERT INTO tbl_gz_courses
         VALUES (
             #{id},
             #{userId},
@@ -32,7 +32,7 @@
     </insert>
 
     <update id="updateCourse">
-        UPDATE tbl_courses
+        UPDATE tbl_gz_courses
         SET
             name = #{name},
             professor = #{professor}
@@ -40,25 +40,25 @@
     </update>
 
     <delete id="deleteCourse">
-        DELETE FROM tbl_courses
+        DELETE FROM tbl_gz_courses
         WHERE id = #{id}
     </delete>
 
     <select id="selectCourseById" resultType="Course">
         SELECT <include refid="column"/>
-        FROM tbl_courses
+        FROM tbl_gz_courses
         WHERE id = #{id}
     </select>
 
     <select id="selectCourseDtoById" resultMap="CourseDto">
         SELECT <include refid="column"/>
-        FROM tbl_courses
+        FROM tbl_gz_courses
         WHERE id = #{id}
     </select>
 
     <select id="selectCourseDtoListByUserId" resultMap="CourseDto">
         SELECT <include refid="column"/>
-        FROM tbl_courses
+        FROM tbl_gz_courses
         WHERE user_id = #{userId}
     </select>
 

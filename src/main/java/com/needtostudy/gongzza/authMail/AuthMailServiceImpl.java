@@ -6,6 +6,8 @@ import com.needtostudy.gongzza.daos.UserDao;
 import com.needtostudy.gongzza.vos.AuthMail;
 import com.needtostudy.gongzza.vos.AuthenticatedAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
+import java.net.InetAddress;
 
 @Service
 public class AuthMailServiceImpl implements AuthMailService {
@@ -28,6 +32,11 @@ public class AuthMailServiceImpl implements AuthMailService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ServletContext servletContext;
+
+    private static final String PORT = "80";
 
     @Transactional
     public AuthMail createAuthMail(String userId, String email) throws Exception {
@@ -66,8 +75,9 @@ public class AuthMailServiceImpl implements AuthMailService {
                 helper.setFrom("gongzza.co.kr");
                 helper.setTo(authMail.getEmail());
                 helper.setSubject("[공짜] 계정 인증 받으세요! " + authMail.getUserId() + "님");
-//                String host = "http://114.206.137.114:8080";
-                String host = "http://localhost:1234";
+                String host = "http://n09app.cafe24.com/gongzza";
+//                String host = "http://localhost:1234/gongzza";
+
                 helper.setText("<a href=\"" + host + "/authMails/code/" + authMail.getCode() + "?" +
                         "userId=" + authMail.getUserId() +
                         "&email=" + authMail.getEmail() + "\">Click here!</a>", true);

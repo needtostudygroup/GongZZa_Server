@@ -31,9 +31,8 @@ public class ChatLogServiceImpl implements ChatLogService {
 
     @Transactional
     public ChatLog insertChatLog(ChatLog chatLog) throws Exception {
-        pushService.push(chatLog);
-
         chatLogDao.insertChatLog(chatLog);
+        pushService.push(chatLog);
         return chatLogDao.selectChatLog(chatLog.getId());
     }
 }

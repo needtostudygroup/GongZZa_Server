@@ -1,5 +1,7 @@
 package com.needtostudy.gongzza.vos;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class ChatLog {

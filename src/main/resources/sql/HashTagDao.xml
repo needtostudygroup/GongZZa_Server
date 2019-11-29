@@ -13,7 +13,7 @@
         <selectKey keyProperty="id" resultType="Integer" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO tbl_hashtags
+        INSERT INTO tbl_gz_hashtags
         VALUES (
             #{id},
             #{postId},
@@ -24,7 +24,7 @@
 
     <select id="selectHashTagListByPostId" resultType="HashTag">
         SELECT <include refid="column"/>
-        FROM tbl_hashtags
+        FROM tbl_gz_hashtags
         WHERE post_id = #{postId}
     </select>
 

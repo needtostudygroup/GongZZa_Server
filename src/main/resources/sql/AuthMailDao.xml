@@ -10,7 +10,7 @@
     </sql>
 
     <insert id="createAuthMail" parameterType="AuthMail">
-        INSERT INTO tbl_auth_emails
+        INSERT INTO tbl_gz_auth_emails
         VALUES (
             #{userId},
             #{email},
@@ -20,21 +20,21 @@
 
     <select id="selectAuthMail" resultType="AuthMail">
         SELECT <include refid="column"/>
-        FROM tbl_auth_emails
+        FROM tbl_gz_auth_emails
         WHERE user_id = #{userId}
         AND email = #{email}
     </select>
 
     <select id="selectAuthMailByCode" resultType="AuthMail">
         SELECT <include refid="column"/>
-        FROM tbl_auth_emails
+        FROM tbl_gz_auth_emails
         WHERE user_id = #{userId}
         AND email = #{email}
         AND code = #{code}
     </select>
 
     <delete id="deleteAuthMail">
-        DELETE FROM tbl_auth_emails
+        DELETE FROM tbl_gz_auth_emails
         WHERE user_id = #{userId}
         OR email = #{email}
     </delete>

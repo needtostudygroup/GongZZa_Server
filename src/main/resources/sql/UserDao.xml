@@ -15,7 +15,7 @@
     </sql>
 
     <insert id="createUser">
-        INSERT INTO tbl_users
+        INSERT INTO tbl_gz_users
         VALUES (
             #{id},
             #{password},
@@ -30,14 +30,14 @@
 
     <select id="selectUserByIdPw" resultType="UserDto">
         SELECT <include refid="column"/>
-        FROM tbl_users
+        FROM tbl_gz_users
         WHERE id = #{id}
         AND password = #{password}
     </select>
 
     <select id="selectSaltByUserId" resultType="String">
         SELECT salt
-        FROM tbl_users
+        FROM tbl_gz_users
         WHERE id = #{id}
     </select>
 
@@ -47,43 +47,44 @@
             name,
             english_name englishName,
             email
-        FROM tbl_schools
+        FROM tbl_gz_schools
         WHERE id = (
             SELECT
                 school_id
-            FROM tbl_users
+            FROM tbl_gz_users
             WHERE id = #{id}
         )
     </select>
 
-    <select id="selectUserByIdAndEmail" resultType="UserDto">
+    <select id="selectUserByIdNameAndBirthday" resultType="UserDto">
         SELECT <include refid="column"/>
-        FROM tbl_users
+        FROM tbl_gz_users
         WHERE id = #{id}
-        AND email = #{email}
+        AND name = #{name}
+        AND DATE_FORMAT(birthday, '%Y%m%d') = DATE_FORMAT(#{birthday}, '%Y%m%d')
     </select>
 
     <select id="selectUserById" resultType="UserDto">
         SELECT <include refid="column"/>
-        FROM tbl_users
+        FROM tbl_gz_users
         WHERE id = #{id}
     </select>
 
     <select id="selectUserByEmail" resultType="UserDto">
         SELECT <include refid="column"/>
-        FROM tbl_users
+        FROM tbl_gz_users
         WHERE email = #{email}
     </select>
 
-    <select id="selectIdByNameAndEmail" resultType="String">
+    <select id="selectIdByNameAndBirthday" resultType="String">
         SELECT id
-        FROM tbl_users
+        FROM tbl_gz_users
         WHERE name = #{name}
-        AND email = #{email}
+        AND DATE_FORMAT(birthday, '%Y%m%d') = DATE_FORMAT(#{birthday}, '%Y%m%d')
     </select>
 
     <update id="updatePassword">
-        UPDATE tbl_users
+        UPDATE tbl_gz_users
         SET password = #{password}
         WHERE id = #{id}
     </update>

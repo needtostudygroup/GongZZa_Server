@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("chats")
@@ -19,7 +21,11 @@ public class ChatLogController {
 
     @GetMapping("posts/{postId}")
     public List<ChatLog> selectChatLogListAfterDatetime(@PathVariable int postId,
-                                                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssSSS") Date datetime) {
+                                                        @RequestParam Date datetime) {
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        c.setTime(datetime);
+        c.add(Calendar.HOUR, -9);
+        datetime = c.getTime();
         return chatLogService.selectChatLogListAfterDatetime(postId, datetime);
     }
 
@@ -27,6 +33,10 @@ public class ChatLogController {
     public List<PostChatDto> selectPostChatListByUserAfterDatetime(
             @RequestParam String userId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssSSS") Date datetime) {
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        c.setTime(datetime);
+        c.add(Calendar.HOUR, -9);
+        datetime = c.getTime();
         return chatLogService.selectPostChatListByUserAfterDatetime(userId, datetime);
     }
 

@@ -1,0 +1,31 @@
+DROP TABLE tbl_gz_auth_emails;
+DROP TABLE tbl_gz_authenticated_accounts;
+DROP TABLE tbl_gz_chat_logs;
+DROP TABLE tbl_gz_course_infos;
+DROP TABLE tbl_gz_courses;
+DROP TABLE tbl_gz_files;
+DROP TABLE tbl_gz_hashtags;
+DROP TABLE tbl_gz_participants;
+DROP TABLE tbl_gz_posts;
+DROP TABLE tbl_gz_post_notifications;
+DROP TABLE tbl_gz_schools;
+DROP TABLE tbl_gz_tokens;
+DROP TABLE tbl_gz_user_notifications;
+DROP TABLE tbl_gz_users;
+
+
+CREATE TABLE tbl_gz_auth_emails (user_id varchar(50) NOT NULL, email varchar(200) NOT NULL, code varchar(200), PRIMARY KEY (user_id, email));
+CREATE TABLE tbl_gz_authenticated_accounts (user_id varchar(50) NOT NULL, email varchar(200), PRIMARY KEY (user_id), CONSTRAINT uq_authenticated_accounts_email UNIQUE (email));
+CREATE TABLE tbl_gz_chat_logs (id int NOT NULL AUTO_INCREMENT, post_id int NOT NULL, sender_id varchar(45) NOT NULL, content text NOT NULL, sent_at datetime, PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_chat_logs_post_id_tbl_gz_participants_post_id FOREIGN KEY (post_id, sender_id) REFERENCES `tbl_gz_participants` (`post_id`, `user_id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_chat_logs_post_id_tbl_gz_participants_post_id (post_id, sender_id));
+CREATE TABLE tbl_gz_course_infos (id int NOT NULL AUTO_INCREMENT, course_id int NOT NULL, start_time datetime NOT NULL, end_time datetime NOT NULL, day int NOT NULL, PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_course_infos_course_id_tbl_gz_courses_id FOREIGN KEY (course_id) REFERENCES `tbl_gz_courses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_course_infos_course_id_tbl_gz_courses_id (course_id));
+CREATE TABLE tbl_gz_courses (id int NOT NULL AUTO_INCREMENT, user_id varchar(45) NOT NULL, name varchar(45) NOT NULL, professor varchar(45), PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_courses_user_id_tbl_gz_users_id FOREIGN KEY (user_id) REFERENCES `tbl_gz_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_courses_user_id_tbl_gz_users_id (user_id));
+CREATE TABLE tbl_gz_files (id varchar(45) NOT NULL, created_at datetime NOT NULL, PRIMARY KEY (id));
+CREATE TABLE tbl_gz_hashtags (id int NOT NULL AUTO_INCREMENT, post_id int NOT NULL, title varchar(45) NOT NULL, color varchar(8), PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_hashtags_post_id_tbl_gz_posts_id FOREIGN KEY (post_id) REFERENCES `tbl_gz_posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_hashtags_post_id_tbl_gz_posts_id (post_id));
+CREATE TABLE tbl_gz_participants (user_id varchar(45) NOT NULL, post_id int NOT NULL, PRIMARY KEY (user_id, post_id), CONSTRAINT FK_tbl_gz_participants_post_id_tbl_gz_posts_id FOREIGN KEY (post_id) REFERENCES `tbl_gz_posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT FK_tbl_gz_participants_user_id_tbl_gz_users_id FOREIGN KEY (user_id) REFERENCES `tbl_gz_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_participants_post_id_tbl_gz_posts_id (post_id));
+CREATE TABLE tbl_gz_posts (id int NOT NULL AUTO_INCREMENT, user_id varchar(45) NOT NULL, title text NOT NULL, content text, title_image_url text, total_num_participants int NOT NULL, meet_datetime datetime, created_at datetime, PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_posts_user_id_tbl_gz_users_id FOREIGN KEY (user_id) REFERENCES `tbl_gz_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_posts_user_id_tbl_gz_users_id (user_id));
+CREATE TABLE tbl_gz_post_notifications (id int NOT NULL AUTO_INCREMENT, post_id int NOT NULL, content text NOT NULL, uri text NOT NULL, created_at datetime NOT NULL, watched_at datetime NOT NULL, PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_post_notifications_post_id_tbl_gz_posts_id FOREIGN KEY (post_id) REFERENCES `tbl_gz_posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_post_notifications_post_id_tbl_gz_posts_id (post_id));
+CREATE TABLE tbl_gz_schools (id int NOT NULL AUTO_INCREMENT, name varchar(45) NOT NULL, english_name varchar(45) NOT NULL, mail varchar(45) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE tbl_gz_tokens (user_id varchar(45) NOT NULL, token varchar(500) NOT NULL, last_used_at date, PRIMARY KEY (user_id, token), CONSTRAINT fk_tbl_gz_tokens_user_id_tbl_gz_users_id FOREIGN KEY (user_id) REFERENCES `tbl_gz_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE tbl_gz_user_notifications (id int NOT NULL AUTO_INCREMENT, user_id varchar(45) NOT NULL, content text NOT NULL, uri text NOT NULL, created_at datetime NOT NULL, watched_at datetime NOT NULL, PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_user_notifications_user_id_tbl_gz_users_id FOREIGN KEY (user_id) REFERENCES `tbl_gz_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, INDEX FK_tbl_gz_user_notifications_user_id_tbl_gz_users_id (user_id));
+CREATE TABLE tbl_gz_users (id varchar(45) NOT NULL, password text NOT NULL, salt text NOT NULL, birthday date NOT NULL, name varchar(45) NOT NULL, signed_in_at datetime NOT NULL, school_id int NOT NULL, email varchar(100), PRIMARY KEY (id), CONSTRAINT FK_tbl_gz_users_school_id_tbl_gz_schools_id FOREIGN KEY (school_id) REFERENCES `tbl_gz_schools` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT uq_user_email UNIQUE (email), INDEX FK_tbl_gz_users_school_id_tbl_gz_schools_id (school_id));
+

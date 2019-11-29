@@ -8,12 +8,12 @@ import com.needtostudy.gongzza.vos.User;
 import com.needtostudy.gongzza.daos.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -70,12 +70,12 @@ public class UserServiceImpl implements UserService {
         return Base64.encodeBase64String(factory.generateSecret(spec).getEncoded());
     }
 
-    public String findId(String name, String email) {
-        return userDao.selectIdByNameAndEmail(name, email);
+    public String findId(String name, Date birthday) {
+        return userDao.selectIdByNameAndBirthday(name, birthday);
     }
 
-    public int authenticateFindPassword(String id, String email) {
-        if (userDao.selectUserByIdAndEmail(id, email) != null)
+    public int authenticateFindPassword(String id, String name, Date birthday) {
+        if (userDao.selectUserByIdNameAndBirthday(id, name, birthday) != null)
             return 200;
         return 0;
     }

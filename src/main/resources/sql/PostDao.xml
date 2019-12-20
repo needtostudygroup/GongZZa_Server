@@ -83,6 +83,7 @@
                 ON cu.id = c.user_id
                 AND cu.id = #{userId}
             WHERE DATE_FORMAT(p.meet_datetime,'%h%i') BETWEEN DATE_FORMAT(i.start_time, '%h%i')  AND DATE_FORMAT(i.end_time, '%h%i')
+            AND DATE_FORMAT(p.meet_datetime,'%w') = i.day
         ) = 0
         <if test="hashTagList != null">
         AND (

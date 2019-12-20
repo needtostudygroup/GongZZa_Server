@@ -75,8 +75,8 @@ public class AuthMailServiceImpl implements AuthMailService {
                 helper.setFrom("gongzza.co.kr");
                 helper.setTo(authMail.getEmail());
                 helper.setSubject("[공짜] 계정 인증 받으세요! " + authMail.getUserId() + "님");
-                String host = "http://n09app.cafe24.com/gongzza";
-//                String host = "http://localhost:1234/gongzza";
+//                String host = "http://n09app.cafe24.com/gongzza";
+                String host = "http://localhost:1234/gongzza";
 
                 helper.setText("<a href=\"" + host + "/authMails/code/" + authMail.getCode() + "?" +
                         "userId=" + authMail.getUserId() +
